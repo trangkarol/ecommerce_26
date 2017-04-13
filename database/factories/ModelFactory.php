@@ -12,13 +12,92 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-    static $password;
+$factory->define(App\Models\User::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'email' => $faker->unique()->email,
+        'password' => bcrypt('123456'),
+        'avatar' => config('setting.images.avatar'),
+        'birthday' => $faker->dateTime($max = 'now'),
+        'address' => $faker->address,
+        'phone_number' =>$faker->phoneNumber,
+        'role' => $faker->numberBetween(0, 1),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->name,
+        'type_category' => $faker->numberBetween(0, 2),
+        'parent_id' => $faker->numberBetween(1, 10),
+    ];
+});
+
+$factory->define(App\Models\Product::class, function (Faker\Generator $faker) {
+    static $categoryId;
+
+    return [
+        'name' => $faker->name,
+        'image' => config('setting.images.product'),
+        'price' => $faker->numberBetween(10.000, 1000.000),
+        'number_current' => $faker->numberBetween(10, 100),
+        'category_id' => $faker->randomElement($categoryId ?: $categoryId = App\Models\Category::pluck('id')->toArray()),
+        'made_in' => $faker->company,
+        'date_manufacture' => $faker->dateTime($max = 'now'),
+        'date_expiration' => $faker->dateTime($max = 'now'),
+        'avg_rating' => $faker->numberBetween(1.5, 5),
+    ];
+});
+
+$factory->define(App\Models\Order::class, function (Faker\Generator $faker) {
+    static $userId;
+
+    return [
+        'user_id' => $faker->randomElement($userId ?: $userId = App\Models\User::pluck('id')->toArray()),
+        'total_price' => $faker->numberBetween(10.000, 1000.000),
+        'number' => $faker->numberBetween(10, 100),
+    ];
+});
+
+$factory->define(App\Models\OrderDetail::class, function (Faker\Generator $faker) {
+    static $orderId;
+    static $productId;
+
+    return [
+        'order_id' => $faker->randomElement($orderId ?: $orderId = App\Models\Order::pluck('id')->toArray()),
+        'product_id' => $faker->randomElement($productId ?: $productId = App\Models\Product::pluck('id')->toArray()),
+        'number' => $faker->numberBetween(10, 100),
+        'total_price' => $faker->numberBetween(10.000, 1000.000),
+    ];
+});
+
+$factory->define(App\Models\Rating::class, function (Faker\Generator $faker) {
+    static $userId;
+    static $productId;
+
+    return [
+        'user_id' => $faker->randomElement($userId ?: $userId = App\Models\User::pluck('id')->toArray()),
+        'product_id' => $faker->randomElement($productId ?: $productId = App\Models\Product::pluck('id')->toArray()),
+        'point' => $faker->numberBetween(1, 5),
+    ];
+});
+
+$factory->define(App\Models\SuggestProduct::class, function (Faker\Generator $faker) {
+    static $userId;
+
+    return [
+        'product_name' => $faker->name,
+        'category_name' => $faker->name,
+        'images' => config('setting.images.product'),
+        'price' => $faker->numberBetween(10.000, 1000.000),
+        'number_current' => $faker->numberBetween(10, 100),
+        'made_in' => $faker->company,
+        'date_manufacture' => $faker->dateTime($max = 'now'),
+        'date_expiration' => $faker->dateTime($max = 'now'),
+        'user_id' => $faker->randomElement($userId ?: $userId = App\Models\User::pluck('id')->toArray()),
+        'is_accept' => $faker->numberBetween(0, 1),
     ];
 });
