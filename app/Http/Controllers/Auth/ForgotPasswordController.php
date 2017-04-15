@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use App\Repositories\Category\CategoryInterface;
+use App\Repositories\User\UserInterface;
+use App\Http\Requests\User\ForgotPasswordRequest;
+use DB;
 
 class ForgotPasswordController extends Controller
 {
+    protected $userRepository;
+    protected $categoryRepository;
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -25,8 +32,44 @@ class ForgotPasswordController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(
+        UserInterface $userRepository,
+        CategoryInterface $categoryRepository
+    ) {
+        $this->userRepository = $userRepository;
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    /**
+     * get form forgot password.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function index()
     {
-        $this->middleware('guest');
+        $menus = $this->categoryRepository->getMenu();
+
+        return view('member.user.forgot_password', compact('menus'));
+    }
+
+    /**
+     * forgotPassword
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function forgotPassword(ForgotPasswordRequest $request)
+    {
+        $result = $this->userRepository->forgotPassword($request);
+        if ($result) {
+            $request->session()->flash('success', trans('user.msg.forgotpassword-success'));
+
+            return redirect()->action('Member\HomeController@index');
+        }
+
+        $request->session()->flash('fail', trans('user.msg.forgotpassword-fail'));
+
+        return redirect()->action('Member\HomeController@index');
     }
 }
