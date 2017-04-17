@@ -42,14 +42,15 @@ $factory->define(App\Models\Product::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'image' => config('setting.images.product'),
-        'price' => $faker->numberBetween(10.000, 1000.000),
+        'price' => $faker->numberBetween(1000, 10000),
         'number_current' => $faker->numberBetween(10, 100),
         'category_id' => $faker->randomElement($categoryId ?: $categoryId = App\Models\Category::pluck('id')->toArray()),
         'made_in' => $faker->company,
         'date_manufacture' => $faker->dateTime($max = 'now'),
         'date_expiration' => $faker->dateTime($max = 'now'),
         'avg_rating' => $faker->numberBetween(1.5, 5),
-    ];
+        'description' => $faker->name,
+    ]
 });
 
 $factory->define(App\Models\Order::class, function (Faker\Generator $faker) {
@@ -63,11 +64,11 @@ $factory->define(App\Models\Order::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Models\OrderDetail::class, function (Faker\Generator $faker) {
-    static $orderId;
+    static $userId;
     static $productId;
 
     return [
-        'order_id' => $faker->randomElement($orderId ?: $orderId = App\Models\Order::pluck('id')->toArray()),
+        'order_id' => $faker->randomElement($userId ?: $userId = App\Models\Order::pluck('id')->toArray()),
         'product_id' => $faker->randomElement($productId ?: $productId = App\Models\Product::pluck('id')->toArray()),
         'number' => $faker->numberBetween(10, 100),
         'total_price' => $faker->numberBetween(10.000, 1000.000),
