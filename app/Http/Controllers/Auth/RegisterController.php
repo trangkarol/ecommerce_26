@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Repositories\User\UserInterface;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\User\InsertUserRequest;
+use App\Repositories\Category\CategoryInterface;
+use App\Http\Requests\User\UpdateUserRequest;
+use DB;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -28,44 +34,75 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    protected $userRepository;
+    protected $categoryRepository;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
+    public function __construct(
+        UserInterface $userRepository,
+        CategoryInterface $categoryRepository
+    ) {
+        $this->userRepository = $userRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * get form register.
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    public function index()
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
+        $menus = $this->categoryRepository->getMenu();
+        return view('member.user.register', compact('menus'));
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * register a member.
      *
      * @param  array  $data
-     * @return User
+     * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function create(array $data)
+    public function register(InsertUserRequest $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+
+        $result = $this->userRepository->register($request, config('setting.role.user'));
+        if ($result) {
+            Auth::login($result, true);
+        }
+
+        return redirect()->action('Member\HomeController@index');
+    }
+
+    /**
+     * getUpdate a member.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function getUpdate($id)
+    {
+        $user = $this->userRepository->find($id);
+        $menus = $this->categoryRepository->getMenu();
+
+        return view('member.user.detail', compact('user', 'menus'));
+    }
+
+    /**
+     * register a member.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function update(UpdateUserRequest $request, $id)
+    {
+        $result = $this->userRepository->update($request, $id);
+
+        return redirect()->action('Auth\RegisterController@getUpdate', $id);
     }
 }
