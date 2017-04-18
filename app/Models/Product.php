@@ -24,6 +24,7 @@ class Product extends Model
         'date_manufacture',
         'date_expiration',
         'avg_rating',
+        'description',
     ];
 
     /**
@@ -32,6 +33,7 @@ class Product extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+    protected $appends = ['path_image'];
 
     public function category()
     {
@@ -41,5 +43,30 @@ class Product extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'ratings')->withPivot('point')->withTimestamps();
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_details')->withPivot('number', 'total_price')->withTimestamps();
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
+    public function getPathImageAttribute()
+    {
+        return url(config('setting.path.show'), $this->image);
+    }
+
+    public function setDateManufacturedAttribute($value)
+    {
+        $this->attributes['date_manufacture'] = date_create($value);
+    }
+
+    public function setDateExpirationAttribute($value)
+    {
+        $this->attributes['date_expiration'] = date_create($value);
     }
 }

@@ -91,4 +91,36 @@ class ProductRepository extends BaseRepository implements ProductInterface
     {
         return $this->model->with('category')->where('id', $productId)->first();
     }
+
+    /**
+    * function  hotProduct.
+     *
+     * @return true or false
+     */
+    public function hotProduct()
+    {
+        return $this->model->join('order_details', 'products.id', 'order_details.product_id')
+            ->select(
+                'products.id',
+                'products.name',
+                'products.image',
+                'products.price',
+                'products.avg_rating',
+                \DB::raw('SUM(order_details.product_id) as numberProduct')
+            )
+            ->groupBy('products.id', 'products.name', 'products.image', 'products.price', 'products.avg_rating')
+            ->orderBy('numberProduct', 'desc')->take(config('setting.user.take'))->get();
+    }
+
+    /**
+    * function  new Product.
+     *
+     * @return true or false
+     */
+    public function newProduct()
+    {
+        return $this->model->select('products.id', 'products.name', 'products.image', 'products.price', 'products.avg_rating')
+            ->where(\DB::raw('DATEDIFF(NOW(), created_at)'), '>=', config('setting.user.number_date_create'))
+            ->orderBy('created_at', 'desc')->take(config('setting.user.take'))->get();
+    }
 }
