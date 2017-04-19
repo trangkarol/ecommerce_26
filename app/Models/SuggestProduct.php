@@ -16,7 +16,10 @@ class SuggestProduct extends Model
      */
     protected $fillable = [
         'product_name',
+        'category_id',
         'category_name',
+        'sub_category_id',
+        'sub_category_name',
         'price',
         'user_id',
         'images',
@@ -33,9 +36,30 @@ class SuggestProduct extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+    protected $appends = ['path_images', 'price_format'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function setDateManufacturedAttribute($value)
+    {
+        $this->attributes['date_manufacture'] = date_create($value);
+    }
+
+    public function setDateExpirationAttribute($value)
+    {
+        $this->attributes['date_expiration'] = date_create($value);
+    }
+
+    public function getPathImagesAttribute()
+    {
+        return url(config('setting.path.show'), $this->images);
+    }
+
+    public function getPriceFormatAttribute()
+    {
+        return number_format($this->price, 3, ',', '.');
     }
 }

@@ -24,6 +24,9 @@ class User extends Authenticatable
         'role',
         'phone_number',
         'address',
+        'provider',
+        'provider_id',
+        'password',
     ];
 
     /**
@@ -42,6 +45,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $dates = ['deleted_at'];
+    protected $appends = ['path_avatar'];
 
     public function orders()
     {
@@ -56,5 +60,30 @@ class User extends Authenticatable
     public function products()
     {
         return $this->belongsToMany(Product::class, 'ratings')->withPivot('point')->withTimestamps();
+    }
+
+    public function isAdmin()
+    {
+        return $this->role == config('setting.role.admin');
+    }
+
+    public function isUser()
+    {
+        return $this->role == config('setting.role.user');
+    }
+
+    public function getPathAvatarAttribute()
+    {
+        return url(config('setting.path.show'), $this->avatar);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function setBirthdayAttribute($value)
+    {
+        $this->attributes['birthday'] = date_create($request->birthday);
     }
 }
