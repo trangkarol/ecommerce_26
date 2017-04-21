@@ -14,11 +14,11 @@
         @include('member.home.product_featured')
     </div>
     <!-- hot product -->
-    <div class="new-arrivals-w3agile">
+    <div class="cnt-main">
         @include('member.home.product_hot')
     </div>
     <!-- product new-->
-    <div class="product-agile">
+    <div class="cnt-main">
         @include('member.home.product_new')
     </div>
     <!-- product -->

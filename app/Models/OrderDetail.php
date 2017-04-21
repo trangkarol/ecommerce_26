@@ -12,11 +12,13 @@ class OrderDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'order_id',
         'product_id',
         'number',
         'total_price',
     ];
+
+    protected $appends = ['total_price_format'];
 
     public function product()
     {
@@ -26,5 +28,10 @@ class OrderDetail extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function getTotalPriceFormatAttribute()
+    {
+        return number_format($this->total_price, 3, ',', ',') . ' ' . trans('common.lbl-vnd');
     }
 }

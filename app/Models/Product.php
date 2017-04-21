@@ -33,6 +33,7 @@ class Product extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
     protected $appends = ['path_image'];
 
     public function category()
@@ -68,5 +69,10 @@ class Product extends Model
     public function setDateExpirationAttribute($value)
     {
         $this->attributes['date_expiration'] = date_create($value);
+    }
+
+    public function getPriceFormatAttribute()
+    {
+        return number_format($this->price, 3, ',', ',') . ' ' . trans('common.lbl-vnd');
     }
 }

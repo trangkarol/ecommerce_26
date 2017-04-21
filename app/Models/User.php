@@ -84,6 +84,6 @@ class User extends Authenticatable
 
     public function setBirthdayAttribute($value)
     {
-        $this->attributes['birthday'] = date_create($request->birthday);
+        $this->attributes['birthday'] = date_create($value);
     }
 }
