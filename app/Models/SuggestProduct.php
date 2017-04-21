@@ -28,6 +28,7 @@ class SuggestProduct extends Model
         'date_manufacture',
         'date_expiration',
         'is_accept',
+        'description',
     ];
 
     /**
@@ -43,7 +44,7 @@ class SuggestProduct extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function setDateManufacturedAttribute($value)
+    public function setDateManufactureAttribute($value)
     {
         $this->attributes['date_manufacture'] = date_create($value);
     }
@@ -60,6 +61,6 @@ class SuggestProduct extends Model
 
     public function getPriceFormatAttribute()
     {
-        return number_format($this->price, 3, ',', '.');
+        return number_format($this->price, 3, ',', ',') . ' ' . trans('common.lbl-vnd');
     }
 }
