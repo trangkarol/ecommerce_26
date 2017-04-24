@@ -17,7 +17,7 @@ class ProductNewsComposer
      */
     public function __construct(ProductInterface $productRepository)
     {
-        // $this->new_products = $productRepository->newProduct();
+        $this->new_products = $productRepository->newProduct();
     }
 
     /**
