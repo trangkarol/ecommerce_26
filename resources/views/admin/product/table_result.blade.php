@@ -19,8 +19,8 @@
                         <a href="{{ action('Admin\ProductController@show', $product->id) }}"><img src="{{ $product->getPathImageAttribute() }}" width="70px" height="50px" /></a>
                     </td>
                     <td><a href="{{ action('Admin\ProductController@show', $product->id) }}">{{ $product->name }}</a></td>
-                    <td>{{ $product->price }}</td>
-                    <td>{{ $product->description }}</td>
+                    <td>{{ $product->price_format }}</td>
+                    <td class="div-description">{{ $product->description }}</td>
                     <td>{{ $product->category->name }}</td>
                     <td>
                         <div class="col-md-6">
@@ -28,8 +28,8 @@
                         </div>
                         <div class="col-md-6">
                         {{ Form::open(['action' => ['Admin\ProductController@destroy', $product->id], 'class' => 'form-delete-product']) }}
-                                {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['class' => 'btn btn-primary btn-delete', 'type' => 'button', 'data-toggle' => 'tooltip', 'title' => trans('product.tooltip.delete')]) !!}
-                            {{ Form::close() }}
+                            {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['class' => 'btn btn-primary btn-delete', 'type' => 'button', 'data-toggle' => 'tooltip', 'title' => trans('product.tooltip.delete')]) !!}
+                        {{ Form::close() }}
                         </div>
                     </td>
                 </tr>

@@ -18,6 +18,8 @@ return [
     'lbl-status' => 'Status',
     'lbl-paid' => 'Paid',
     'lbl-unpaid' => 'UnPaid',
+    'lbl-cancel' => 'Cancel',
+    'lbl-chosse' => '--- All ---',
     'tooltip' => [
         'create' => 'Create order',
         'update' => 'Update order',
@@ -43,5 +45,7 @@ return [
         'update-fail' => 'Update Product Fail!',
         'delete-success' => 'Delete Product Success!',
         'delete-fail' => 'Delete Product Fail!',
+        'change-status-success' => 'Change status success',
+        'change-status-fail' => 'Change status fail',
     ],
 ];

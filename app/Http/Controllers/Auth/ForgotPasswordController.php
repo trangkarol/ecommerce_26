@@ -54,7 +54,7 @@ class ForgotPasswordController extends Controller
     }
 
     /**
-     * forgotPassword
+     * register a member.
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -67,7 +67,6 @@ class ForgotPasswordController extends Controller
 
             return redirect()->action('Member\HomeController@index');
         }
-
         $request->session()->flash('fail', trans('user.msg.forgotpassword-fail'));
 
         return redirect()->action('Member\HomeController@index');

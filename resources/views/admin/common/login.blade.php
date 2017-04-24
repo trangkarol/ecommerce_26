@@ -20,13 +20,13 @@
             </div>
 
             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                {{ Form::password('password', ['id' => 'password', 'required', 'placeholder' => '****************']) }}
+                    {{ Form::password('password', ['id' => 'password', 'required', 'placeholder' => '****************']) }}
 
-                @if ($errors->has('password'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                @endif
+                    @if ($errors->has('password'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
             </div>
 
             <div class="col-md-4 col-md-offset-7">

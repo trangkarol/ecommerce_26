@@ -27,7 +27,7 @@ class Order extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
-    protected $appends = ['total_price_format', 'date_format'];
+    protected $appends = ['total_price_format', 'date_format', 'name_status'];
 
     public function products()
     {
@@ -46,11 +46,24 @@ class Order extends Model
 
     public function getTotalPriceFormatAttribute()
     {
-        return number_format($this->total_price, 3, '.', ',') . ' ' . trans('common.lbl-vnd');
+        return number_format($this->total_price, 3, ',', ',') . ' ' . trans('common.lbl-vnd');
     }
 
     public function getDateFormatAttribute()
     {
         return date_format($this->created_at, 'Y/m/d');
+    }
+
+    public function getNameStatusAttribute()
+    {
+        if ($this->status == config('setting.order_status.paid')) {
+            return trans('order.lbl-paid');
+        }
+
+        if ($this->status == config('setting.order_status.unpaid')) {
+            return trans('order.lbl-unpaid');
+        }
+
+        return trans('order.lbl-cancel');
     }
 }

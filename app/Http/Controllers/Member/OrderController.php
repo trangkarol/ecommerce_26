@@ -45,6 +45,7 @@ class OrderController extends Controller
             $orders = $this->orderRepository->getOrderUsers();
         }
 
+
         return view('member.cart.cart_detail', compact('orders'));
     }
 
@@ -97,23 +98,17 @@ class OrderController extends Controller
             }
 
             $order = $this->orderRepository->createOrderMultiple($orders, $orderDetails);
+            $data = [
+                'order' => $order,
+            ];
 
-            if ($order) {
-                $data = [
-                    'order' => $order,
-                ];
+            Mail::to(Auth::user()->email)->queue(new SendOrder($data));
+            Session::forget('yourCart');
 
-                Mail::to(Auth::user()->email)->queue(new SendOrder($data));
-                Session::forget('yourCart');
-                $request->session()->flash('success', trans('order.msg.order-success'));
-            } else {
-                $request->session()->flash('fail', trans('order.msg.order-fail'));
-            }
+            return redirect()->action('Member\OrderController@index');
         } catch (\Exception $e) {
-            $request->session()->flash('fail', trans('order.msg.order-fail'));
+            return redirect()->action('Member\OrderController@index');
         }
-
-        return redirect()->action('Member\OrderController@index');
     }
 
     /**
@@ -204,14 +199,13 @@ class OrderController extends Controller
     {
         if ($request->ajax()) {
             try {
-                $yourCarts = $yourCartNews = Session::get('yourCart');
-
+                $yourCarts = Session::get('yourCart');
+                $yourCartNews = $yourCarts;
                 foreach ($yourCarts as $key => $value) {
                     if ($value['productId'] == $request->productId) {
                         $yourCartNews = array_except($yourCartNews, $key);
                     }
                 }
-
                 Session::put('yourCart', $yourCartNews);
                 if (count($yourCartNews) == 0) {
                     Session::forget('yourCart');

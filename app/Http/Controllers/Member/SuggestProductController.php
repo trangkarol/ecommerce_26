@@ -61,7 +61,7 @@ class SuggestProductController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->except('files');
+        $input = $request->only(['product_name', 'made_in', 'number_current', 'description', 'price', 'category_id', 'category_name', 'sub_category_id', 'sub_category_name', 'date_manufacture', 'date_expiration']);
         $input['images'] = isset($request->file) ? $this->suggestProductRepository->uploadImages(null, $request->file, null) : config('settings.images.product');
         $input['is_accept'] = config('setting.accept_default');
         $input['user_id'] = Auth::user()->id;
@@ -83,7 +83,7 @@ class SuggestProductController extends Controller
     public function show($id)
     {
         $parentCategory = $this->categoryRepository->getCategoryLibrary(config('setting.mutil-level.one'));
-        $productSuggest = $this->suggestProductRepository->find($id);
+        $productSuggest = $this->suggestProductRepository->find($id, '*');
 
         return view('member.product_suggest.detail')->with(['parentCategory' => $parentCategory, 'madeIn' => $this->madeIn, 'productSuggest' => $productSuggest]);
     }
@@ -111,7 +111,7 @@ class SuggestProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->except('files');
+        $input = $request->only(['product_name', 'made_in', 'number_current', 'description', 'price', 'category_id', 'category_name', 'sub_category_id', 'sub_category_name']);
         $input['is_accept'] = config('setting.accept_default');
         $input['user_id'] = Auth::user()->id;
         $result = $this->suggestProductRepository->updateSuggestProduct($input, $request->file, $id);
@@ -144,11 +144,11 @@ class SuggestProductController extends Controller
      */
     public function getCategory(Request $request)
     {
-        $parentId = $request->parent_id;
-        $subId = $request->sub_id;
+        $parent_id = $request->parent_id;
+        $sub_id = $request->sub_id;
         try {
-            $subCategory = $this->categoryRepository->getSubCategory($parentId);
-            $html = view('member.product_suggest.sub_category', compact('subCategory', 'subId'))->render();
+            $subCategory = $this->categoryRepository->getSubCategory($parent_id);
+            $html = view('member.product_suggest.sub_category', compact('subCategory', 'sub_id'))->render();
 
             return response()->json(['result' => true, 'html' => $html]);
         } catch (\Exception $e) {

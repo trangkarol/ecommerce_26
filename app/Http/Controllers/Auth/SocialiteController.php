@@ -24,6 +24,7 @@ class SocialiteController extends Controller
     {
         $this->userRepository = $userRepository;
     }
+
     /**
      * Redirect the user to the OAuth Provider.
      *
@@ -35,25 +36,25 @@ class SocialiteController extends Controller
     }
 
     /**
-     * handleProviderCallback
+     * handleProviderCallback.
      *
      * @return void
      */
     public function handleProviderCallback($provider)
     {
-        try {
-            $user = Socialite::driver($provider)->user();
-            $authUser = $this->findOrCreateUser($user, $provider);
-            Auth::login($authUser, true);
+        $user = Socialite::driver($provider)->user();
+        // dd($user);
 
-            return redirect()->action('Member\HomeController@index');
-        } catch (\Exception $e) {
-            return redirect()->action('Member\HomeController@index');
+        $authUser = $this->findOrCreateUser($user, $provider);
+        if ($authUser) {
+            Auth::login($authUser, true);
         }
+
+        return redirect()->action('Member\HomeController@index');
     }
 
     /**
-     * findOrCreateUser
+     * findOrCreateUser.
      *
      * @return void
      */

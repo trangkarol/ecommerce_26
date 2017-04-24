@@ -20,11 +20,26 @@
             <div class="menu_section">
                 <h3>{{ trans('common.lbl-genaral') }}</h3>
                 <ul class="nav side-menu">
+                    <!-- management statics-->
+                    <li class="@if (Request::url() == action('Admin\StatisticController@index')) active @endif ">
+                        <a href="{{ action('Admin\StatisticController@index') }}"><i class="fa fa-bar-chart"></i><span> {{ trans('static.title-static') }} </span></a>
+                    </li>
+                    <!-- management users-->
+                    <li class="@if (Request::url() == action('Admin\UserController@index')) active @endif ">
+                        <a href="{{ action('Admin\UserController@index') }}"><i class="fa fa-users"></i><span> {{ trans('user.title-users') }} </span></a>
+                    </li>
                     <!-- management products-->
                     <li class="@if (Request::url() == action('Admin\ProductController@index')) active @endif ">
-                        <a href="{{ action('Admin\ProductController@index') }}"><i class="fa fa-users "></i><span> {{ trans('product.title-product') }} </span></a>
+                        <a href="{{ action('Admin\ProductController@index') }}"><i class="fa fa-product-hunt"></i><span> {{ trans('product.title-product') }} </span></a>
                     </li>
-
+                    <!-- management orders-->
+                    <li class="@if (Request::url() == action('Admin\OrderController@index')) active @endif ">
+                        <a href="{{ action('Admin\OrderController@index') }}"><i class="fa fa-first-order"></i><span> {{ trans('order.title-order') }} </span></a>
+                    </li>
+                    <!-- management request-->
+                    <li class="@if (Request::url() == action('Admin\RequestController@index')) active @endif ">
+                        <a href="{{ action('Admin\RequestController@index') }}"><i class="fa fa-retweet"></i><span> {{ trans('product.title-request') }} </span></a>
+                    </li>
                 </ul>
             </div>
         </div>

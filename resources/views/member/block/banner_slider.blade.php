@@ -4,16 +4,16 @@
             <div class="core-slider_viewport">
               <div class="core-slider_list">
                     <div class="core-slider_item">
-                        <img src="{{ url(config('setting.path.images'), config('setting.banner.images1') }}" class="img-responsive" alt="">
+                        <img src="{{ url(config('setting.path.images'), 'b1.jpg') }}" class="img-responsive" alt="">
                     </div>
                     <div class="core-slider_item">
-                        <img src="{{ url(config('setting.path.images'), config('setting.banner.images2')) }}" class="img-responsive" alt="">
+                        <img src="{{ url(config('setting.path.images'), 'b2.jpg') }}" class="img-responsive" alt="">
                     </div>
                     <div class="core-slider_item">
-                        <img src="{{ url(config('setting.path.images'), config('setting.banner.images3')) }}" class="img-responsive" alt="">
+                        <img src="{{ url(config('setting.path.images'), 'b3.jpg') }}" class="img-responsive" alt="">
                     </div>
                     <div class="core-slider_item">
-                        <img src="{{ url(config('setting.path.images'), config('setting.banner.images4')) }}" class="img-responsive" alt="">
+                        <img src="{{ url(config('setting.path.images'), 'b4.jpg') }}" class="img-responsive" alt="">
                     </div>
                </div>
             </div>

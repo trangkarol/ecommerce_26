@@ -39,6 +39,7 @@ class ResetPasswordController extends Controller
      */
     public function __construct(UserInterface $userRepository)
     {
+        // $this->middleware('guest');
         $this->userRepository = $userRepository;
     }
 

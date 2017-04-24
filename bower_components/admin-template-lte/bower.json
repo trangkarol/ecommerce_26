@@ -1,0 +1,28 @@
+{
+  "name": "admin-template-lte",
+  "version": "1.0.3",
+  "authors": [
+    "Admin LTE"
+  ],
+  "description": "admin template",
+  "main": "css/AdminLTE.css",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "keywords": [
+    "admin-template"
+  ],
+  "license": "Admin LTE",
+  "homepage": "almsaeedstudio.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

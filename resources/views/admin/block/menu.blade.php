@@ -14,14 +14,17 @@
                         </a>
                         <ul class="dropdown-menu dropdown-usermenu pull-right">
                             <li>
-                                <a href="{{ action('Member\HomeController@index') }}"> {{ trans('user.lbl-profile')}}</a>
+                                <a href=""> {{ trans('common.lbl-profile')}}</a>
                             </li>
                             <li>
                                 <a href="{{ action('Auth\LoginController@logout') }}" id="btn-logout">
-                                    <i class="fa fa-sign-out pull-right"></i> {{ trans('admin.title-logout') }}
+                                    <i class="fa fa-sign-out pull-right"></i> {{ trans('common.title-logout') }}
                                 </a>
                                 {!! Form::open(['action' => 'Auth\LoginController@logout', 'class' => 'form-horizontal', 'id' => 'logout-form']) !!}
                                 {{ Form::close() }}
+                            </li>
+                            <li>
+                                <a href="{{ action('Auth\ResetPasswordController@index') }}"> {{ trans('common.lbl-change-pass-word')}}</a>
                             </li>
                         </ul>
                     </li>

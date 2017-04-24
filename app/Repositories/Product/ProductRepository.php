@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Input;
 use DateTime;
+use Session;
+use DB;
 
 class ProductRepository extends BaseRepository implements ProductInterface
 {
@@ -27,7 +29,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
      */
     public function getProduct()
     {
-        return $this->model->with('category')->paginate(config('setting.admin.page'));
+        return $this->model->with('category')->paginate(12);
     }
 
     /**
@@ -35,22 +37,16 @@ class ProductRepository extends BaseRepository implements ProductInterface
      *
      * @return true or false
      */
-    public function create($request)
+    public function createProduct($request)
     {
-        DB::beginTransaction();
         try {
-            $input = $request->only(['name', 'made_in', 'number_current', 'description', 'price']);
-            $input['date_manufacture'] = date_create($request->date_manufacture);
-            $input['date_expiration'] = date_create($request->date_expiration);
+            $input = $request->only(['name', 'made_in', 'number_current', 'description', 'price', 'date_manufacture', 'date_expiration']);
             $input['category_id'] = $request->subCategory;
             $input['image'] = isset($request->file) ? parent::uploadImages(null, $request->file, null) : config('settings.images.product');
             $result = parent::create($input);
-            DB::commit();
 
             return true;
         } catch (\Exception $e) {
-            DB::rollback();
-
             return false;
         }
     }
@@ -60,16 +56,38 @@ class ProductRepository extends BaseRepository implements ProductInterface
      *
      * @return true or false
      */
+    public function saveRequestProduct($products)
+    {
+        DB::beginTransaction();
+        try {
+            parent::create($products);
+            DB::commit();
+
+            return true;
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    /**
+    * function update.
+     *
+     * @return true or false
+     */
     public function update($request, $id)
     {
         DB::beginTransaction();
         try {
             $product = parent::find($id, 'image');
-            $input = $request->only(['name', 'made_in', 'number_current', 'description']);
-            $input['date_manufacture'] = date_create($request->date_manufacture);
-            $input['date_expiration'] = date_create($request->date_expiration);
+            $input = $request->only(['name', 'made_in', 'number_current', 'description', 'date_manufacture', 'date_expiration']);
             $input['category_id'] = $request->subCategory;
-            $input['image'] = isset($request->file) ? parent::uploadImages($product->image, $request->file, config('settings.images.product')) : $product->image;
+
+            if (isset($request->file)) {
+                $input['image'] = parent::uploadImages($product->image, $request->file, config('setting.images.product'));
+            }
 
             parent::update($input, $id);
             DB::commit();
@@ -93,6 +111,38 @@ class ProductRepository extends BaseRepository implements ProductInterface
     }
 
     /**
+    * function getProductCategory.
+     *
+     * @return true or false
+     */
+    public function getProductCategory($categoryId)
+    {
+        return $this->model->whereHas('category', function($query) use ($categoryId) {
+            $query->where('parent_id', $categoryId);
+        })->paginate(12);
+    }
+
+    /**
+    * function listProduct.
+     *
+     * @return true or false
+     */
+    public function listProduct($productIds)
+    {
+        return $this->model->whereIn('id', $productIds)->get();
+    }
+
+    /**
+    * function relatedProduct.
+     *
+     * @return true or false
+     */
+    public function relatedProduct($categoryId, $productId)
+    {
+        return $this->model->where('category_id', $categoryId)->where('id', '!=', $productId)->take(8)->get();
+    }
+
+    /**
     * function  hotProduct.
      *
      * @return true or false
@@ -109,7 +159,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
                 \DB::raw('SUM(order_details.product_id) as numberProduct')
             )
             ->groupBy('products.id', 'products.name', 'products.image', 'products.price', 'products.avg_rating')
-            ->orderBy('numberProduct', 'desc')->take(config('setting.user.take'))->get();
+            ->orderBy('numberProduct', 'desc')->take(8)->get();
     }
 
     /**
@@ -120,7 +170,97 @@ class ProductRepository extends BaseRepository implements ProductInterface
     public function newProduct()
     {
         return $this->model->select('products.id', 'products.name', 'products.image', 'products.price', 'products.avg_rating')
-            ->where(\DB::raw('DATEDIFF(NOW(), created_at)'), '>=', config('setting.user.number_date_create'))
-            ->orderBy('created_at', 'desc')->take(config('setting.user.take'))->get();
+            ->where(\DB::raw('DATEDIFF(NOW(), created_at)'), '<=', 3)->orderBy('created_at', 'desc')->take(8)->get();
+    }
+
+    /**
+    * function saveFile
+     *
+     * @return true or false
+     */
+    public function saveFile($products)
+    {
+        DB::beginTransaction();
+        try {
+            foreach ($products as $product) {
+                $inputs = $this->dataProduct($product);
+                if (!$this->validator($inputs)->validate()) {
+                    parent::create($inputs);
+                }
+            }
+
+            DB::commit();
+
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    /**
+    * function searchProduct($input)
+     *
+     * @return true or false
+     */
+    public function searchProduct($input)
+    {
+        try {
+            $products = $this->model;
+
+            if ($input['parentCategory_id'] != config('setting.search_default')) {
+                $parentId = $input['subCategory_id'];
+
+                if ($input['subCategory_id'] != config('setting.search_default')) {
+                    $subCategoryId = $input['subCategory_id'];
+                    $products = $products->with(['category' => function ($query) use ($subCategoryId) {
+                        $query->where('id', $subCategoryId);
+                    }]);
+                } else {
+                    $products = $products->with(['category' => function ($query) use ($parentId) {
+                        $query->where('parent_id', $parentId);
+                    }]);
+                }
+            }
+
+            if ($input['rating'] != config('setting.search_default')) {
+                $products = $products->where('avg_rating', '>=', $input['rating']);
+            }
+
+            if ($input['price_from'] != config('setting.search_default')) {
+                $products = $products->where('price', '>=', $input['price_from']);
+            }
+
+            if ($input['price_to'] != config('setting.search_default')) {
+                $products = $products->where('price', '<=', $input['price_to']);
+            }
+
+            if (!empty($input['name'])) {
+                $products = $products->where('name', 'LIKE', '%' . $input['name']);
+            }
+
+            if ($input['sort_product'] == config('setting.product.hot')) {
+                $products = $products->with(['orderDetail' => function ($query) {
+                    $query->sum('product_id');
+                }]);
+            }
+
+            if ($input['sort_product'] == config('setting.product.new')) {
+                $products = $products->orderBy('price', 'asc');
+            }
+
+            if ($input['sort_price'] == config('setting.sort_price.asc')) {
+                $products = $products->orderBy('price', 'asc');
+            }
+
+            if ($input['sort_price'] == config('setting.sort_price.desc')) {
+                $products = $products->orderBy('price', 'desc');
+            }
+
+            return $products->paginate(12);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

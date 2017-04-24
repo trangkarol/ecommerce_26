@@ -13,5 +13,9 @@
     {{ Html::style('/jquery-colorbox/example3/colorbox.css') }}
     {{ Html::style('/css/custom.min.css') }}
     {{ Html::style('/css/common.css') }}
+    <!-- js -->
+    {{ Html::script('/bower_components/jquery/dist/jquery.js') }}
+    {{ Html::script('/bower_components/moment/src/moment.js') }}
+    {{ Html::script('/bower_components/chartjs/dist/Chart.js') }}
 @show
 <!-- end csss -->

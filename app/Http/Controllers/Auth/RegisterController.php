@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\User\InsertUserRequest;
 use App\Repositories\Category\CategoryInterface;
 use App\Http\Requests\User\UpdateUserRequest;
+use Illuminate\Http\Request;
 use DB;
 use Auth;
 
@@ -70,7 +71,6 @@ class RegisterController extends Controller
      */
     public function register(InsertUserRequest $request)
     {
-
         $result = $this->userRepository->register($request, config('setting.role.user'));
         if ($result) {
             Auth::login($result, true);
@@ -80,7 +80,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * getUpdate a member.
+     * register a member.
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -99,9 +99,15 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    public function update(UpdateUserRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        DB::beginTransaction();
         $result = $this->userRepository->update($request, $id);
+        if ($result) {
+            DB::commit();
+        }
+
+        DB::rollback();
 
         return redirect()->action('Auth\RegisterController@getUpdate', $id);
     }

@@ -10,6 +10,7 @@ use App\Mail\ForgotPassword;
 use Auth;
 use DateTime;
 use Mail;
+use DB;
 
 class UserRepository extends BaseRepository implements UserInterface
 {
@@ -91,15 +92,13 @@ class UserRepository extends BaseRepository implements UserInterface
      */
     public function createSocialite($user, $provider)
     {
-        DB::beginTransaction();
         try {
             $authUser = $this->model->where('provider_id', $user->id)->first();
-
             if ($authUser) {
                 return $authUser;
             }
 
-            $result = parent::create([
+            return parent::create([
                 'name'     => $user->name,
                 'email'    => $user->email,
                 'provider' => $provider,
@@ -107,14 +106,6 @@ class UserRepository extends BaseRepository implements UserInterface
                 'avatar' => config('setting.images.avatar'),
                 'role' => config('setting.role.user'),
             ]);
-
-            if ($request) {
-                DB::commit();
-
-                return true;
-            }
-
-            return false;
         } catch (\Exception $e) {
             return false;
         }
@@ -130,18 +121,12 @@ class UserRepository extends BaseRepository implements UserInterface
         DB::beginTransaction();
         try {
             $input = $request->only(['name', 'email', 'password', 'address', 'phone_number']);
-            $input['avatar'] = isset($request->file) ? parent::uploadAvatar(null, $request->file, null) : config('setting.images.avatar');
-            $input['birthday'] = $request->birthday;
+            $input['avatar'] = isset($request->file) ? parent::uploadImages(null, $request->file, null) : config('setting.images.avatar');
             $input['role'] = $role;
-            $result = parent::create($input);
+            $result = $this->model->create($input);
+            DB::commit();
 
-            if ($request) {
-                DB::commit();
-
-                return true;
-            }
-
-            return false;
+            return $result;
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -154,25 +139,19 @@ class UserRepository extends BaseRepository implements UserInterface
      *
      * @return $result
      */
-    public function update($request, $id)
+    public function updateProfile($request, $id, $role)
     {
         DB::beginTransaction();
         try {
             $user = $this->model->find($id);
             $input = $request->only(['name', 'email', 'address', 'phone_number']);
-            $input['avatar'] = isset($request->file) ? parent::uploadAvatar($user->avatar, $request->file, config('setting.images.avatar')) : $user->avatar;
-            $input['birthday'] = $request->birthday;
+            $input['avatar'] = isset($request->file) ? parent::uploadImages($user->avatar, $request->file, config('setting.images.avatar')) : $user->avatar;
             $input['password'] = isset($request->password) ? $request->password : $user->password;
-            $result = parent::update($input, $id);
+            DB::commit();
 
-            if ($request) {
-                DB::commit();
-
-                return true;
-            }
-
-            return false;
+            return parent::update($input, $id);
         } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
 
             return false;
@@ -196,7 +175,8 @@ class UserRepository extends BaseRepository implements UserInterface
                     'name' => $user->name,
                     'password' => $password,
                 ];
-                $this->model->save();
+
+                $this->model->update();
                 Mail::to($user->email)->queue(new ForgotPassword($data));
                 DB::commit();
 
@@ -205,6 +185,76 @@ class UserRepository extends BaseRepository implements UserInterface
 
             return false;
         } catch (\Exception $e) {
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    /**
+    * function getUsers.
+     *
+     * @return imageName
+     */
+    public function getUsers()
+    {
+        return $this->model->paginate(config('setting.admin.paginate'));
+    }
+
+    /**
+    * function delete.
+     *
+     * @return imageName
+     */
+    public function delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            $result = $this->model->find($id)->with('order', 'products', 'suggestProducts')->detach();
+            dd($result);
+            // $this->model->find($id)->with('products')->delete();
+            // $this->model->find($id)->with('suggestProducts')->delete();
+            // $result = $this->model->find($id)->delete();
+            DB::commit();
+
+            return false;
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    /**
+    * function delete.
+     *
+     * @return imageName
+     */
+    public function searchUser($input)
+    {
+        try {
+            $users = $this->model;
+
+            if (!is_null($input['name'])) {
+                $users = $users->where('name', 'LIKE', '%' . $input['name']);
+            }
+
+            if (!is_null($input['email'])) {
+                $users = $users->where('email', 'LIKE', '%' . $input['email']);
+            }
+
+            if ($input['role'] != config('setting.search_default')) {
+                $users = $users->where('role', $input['role']);
+            }
+
+            // if ($input['active_members'] != config('setting.search_default')) {
+            //     $users = $users->where('role', $input['role']);
+            // }
+
+            return $users->paginate(12);
+        } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
 
             return false;

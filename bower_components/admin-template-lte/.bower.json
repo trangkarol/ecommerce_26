@@ -1,0 +1,37 @@
+{
+  "name": "admin-template-lte",
+  "authors": [
+    "Admin LTE"
+  ],
+  "description": "admin template",
+  "main": "css/AdminLTE.css",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "keywords": [
+    "admin-template"
+  ],
+  "license": "Admin LTE",
+  "homepage": "almsaeedstudio.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "b9624f560e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "b9624f560e6e5c486d3746eb7acdd43e561de6dc"
+  },
+  "_source": "https://github.com/ktonguyen/admin-template.git",
+  "_target": "*",
+  "_originalSource": "admin-template-lte",
+  "_direct": true
+}

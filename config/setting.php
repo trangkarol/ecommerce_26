@@ -2,6 +2,12 @@
 
 return [
     'minutes' => 60,
+    'numer_pass' => 8,
+    'accept_default' => 0,
+    'accept' => 1,
+    'cancel' => 2,
+    'search_default' => 0,
+    'default_cart' => 0,
     'defaul_select' => [
         '0' => '',
     ],
@@ -11,29 +17,39 @@ return [
     ],
 
     'user' => [
-        'take' => 8,
-        'number_date_create' => 3,
+        'paginate' => 10,
     ],
 
     'path' => [
         'file' => base_path() . '/public/Upload/',
         'show' => '/Upload',
+        'images' => '/images',
     ],
 
     'images' => [
-        'avatar' => 'avatar.jpg',
+        'avatar' => 'avatar.png',
         'product' => 'product.jpg',
-    ],
-
-    'banner' => [
-        'images1' => 'b1.jpg',
-        'images2' => 'b2.jpg',
-        'images3' => 'b3.jpg',
-        'images4' => 'b4.jpg',
+        'category' => 'category.jpg',
     ],
 
     'mutil-level' => [
         'one' => 0,
         'two' => 1,
+    ],
+
+    'role' => [
+        'admin' => 0,
+        'user' => 1,
+    ],
+
+    'order_status' => [
+        'unpaid' => 0,
+        'paid' => 1,
+        'cancel' => 2,
+    ],
+
+    'sort_price' => [
+        'asc' => 1,
+        'desc' => 2,
     ],
 ];

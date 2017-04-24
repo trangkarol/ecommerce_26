@@ -61,15 +61,15 @@ class Product extends Model
         return url(config('setting.path.show'), $this->image);
     }
 
-    public function setDateManufacturedAttribute($value)
-    {
-        $this->attributes['date_manufacture'] = date_create($value);
-    }
+    // public function setDateManufacturedAttribute($value)
+    // {
+    //     $this->attributes['date_manufacture'] = date_create($value);
+    // }
 
-    public function setDateExpirationAttribute($value)
-    {
-        $this->attributes['date_expiration'] = date_create($value);
-    }
+    // public function setDateExpirationAttribute($value)
+    // {
+    //     $this->attributes['date_expiration'] = date_create($value);
+    // }
 
     public function getPriceFormatAttribute()
     {

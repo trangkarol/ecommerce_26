@@ -14,6 +14,7 @@
         <!-- end csss -->
     </head>
     <body>
+
         @yield('content')
         {{ Html::script('/bower_components/jquery/dist/jquery.js') }}
         {{ Html::script('/bower_components/bootstrap/dist/js/bootstrap.min.js') }}

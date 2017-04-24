@@ -14,7 +14,7 @@ class EditAvgRatingToProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->float('avg_rating')->nullable()->change();
+            $table->integer('avg_rating')->nullable()->change();
         });
     }
 
@@ -26,7 +26,7 @@ class EditAvgRatingToProducts extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->float('avg_rating')->change();
+            $table->dropColumn('avg_rating');
         });
     }
 }

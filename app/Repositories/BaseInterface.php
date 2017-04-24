@@ -23,4 +23,6 @@ interface BaseInterface
     public function delete($id);
 
     public function uploadImages($image = null, $fileImages = null, $namedefault = null);
+
+    public function importFile($file = null);
 }

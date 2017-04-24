@@ -7,6 +7,7 @@ use App\Repositories\User\UserInterface;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Requests\User\LoginRequest;
 use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -49,11 +50,11 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view('admin.common.login');
+        return view('member.user.login');
     }
 
     /**
-     * login to website
+     * Create a new controller instance.
      *
      * @return void
      */
@@ -82,6 +83,7 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+
         $result = $this->userRepository->logout($request);
         if ($result) {
             $request->session()->flash('success', trans('user.msg.logout-success'));

@@ -6,6 +6,7 @@
             <th>{{ trans('order.lbl-total-number') }}</th>
             <th>{{ trans('order.lbl-total-price') }}</th>
             <th>{{ trans('order.lbl-detail') }}</th>
+
         </tr>
     </thead>
     <tbody>

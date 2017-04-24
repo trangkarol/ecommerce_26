@@ -9,10 +9,6 @@
 @endsection
 <!-- content of page -->
 @section('content')
-    <!-- featured products -->
-    <div class="ban-bottom-w3l">
-        @include('member.home.product_featured')
-    </div>
     <!-- hot product -->
     <div class="cnt-main">
         @include('member.home.product_hot')

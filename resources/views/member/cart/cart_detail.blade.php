@@ -31,11 +31,11 @@
                                 <div class="cart-item-info">
                                     <h3><a href="{{ action('Member\ProductController@show', $product->id) }}">{{ $product->name }}</a></h3>
                                     <div class="delivery">
-                                        <p>{{ trans('product.lbl-price') }}: {{ $product->price_format }}</p>
+                                        <p>{{ trans('product.lbl-price') }} : {{ $product->price_format }}</p>
                                         <div class="clearfix"></div>
-                                        <p>{{ trans('product.lbl-made-in') }}: {{ $product->made_in }}</p>
+                                        <p>{{ trans('product.lbl-made-in') }} : {{ $product->made_in }}</p>
                                         <div class="clearfix"></div>
-                                        <p>{{ trans('product.lbl-number') }}: {{ $product->number_order }}</p>
+                                        <p>{{ trans('product.lbl-number') }} : {{ $product->number_order }}</p>
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>

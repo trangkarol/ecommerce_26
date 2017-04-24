@@ -7,6 +7,7 @@ namespace App\Repositories;
 use Exception;
 use DB;
 use Auth;
+use DateTime;
 use Carbon\Carbon;
 
 abstract class BaseRepository implements BaseInterface
@@ -89,5 +90,15 @@ abstract class BaseRepository implements BaseInterface
         $fileImages->move(config('setting.path.file'), $imageName);
 
         return $imageName;
+    }
+
+    public function importFile($file = null)
+    {
+        $dt = new DateTime();
+        $files = explode('.', $file->getClientOriginalName());
+        $image = 'product_' . $dt->format('Y-m-d-H-i-s') . '.' .  $files[count($files) - 1];
+        $file->move(config('setting.path.file'), $image);
+
+        return $image;
     }
 }

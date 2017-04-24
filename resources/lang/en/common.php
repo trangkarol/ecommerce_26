@@ -34,6 +34,8 @@ return [
     'lbl-forgot-password' => 'Forgot password?',
     'lbl-detail' => 'Detail',
     'lbl-search' => 'Search',
+    'lbl-admin' => 'Admin',
+    'lbl-user' => 'User',
     'file' => [
         'import' => 'Import File',
         'export' => 'Export File',
@@ -77,6 +79,17 @@ return [
         'decrease' => 'Decrease',
     ],
 
+    'role' => [
+        'admin' => 'Admin',
+        'user' => 'User',
+    ],
+
+    'product' => [
+        'sort' => '-- Sort --',
+        'hot' => 'Hot Product',
+        'new' => 'New Product',
+    ],
+
     'msg' => [
         'confirm-delete' => 'Do you want to delete this row?',
         'confirm-order' => 'Do you want to order this products?',
@@ -84,6 +97,8 @@ return [
         'confirm-accept' => 'Do you want to insert this products to your website?',
         'confirm-cancel' => 'Do you want to cancel this products to your website?',
         'not-login' => 'You need login to use this function!',
+        'comfirm-status' => 'Do you want to change status of this order?',
+        'confirm-rating' => 'Do you want to comment this product?',
     ],
 
     'mail' => [

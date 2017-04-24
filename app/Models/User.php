@@ -45,7 +45,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $dates = ['deleted_at'];
-    protected $appends = ['path_avatar'];
+    protected $appends = ['path_avatar', 'name_role'];
 
     public function orders()
     {
@@ -85,5 +85,14 @@ class User extends Authenticatable
     public function setBirthdayAttribute($value)
     {
         $this->attributes['birthday'] = date_create($value);
+    }
+
+    public function getNameRoleAttribute()
+    {
+        if ($this->role == config('setting.role.user')) {
+            return trans('common.lbl-user');
+        }
+
+        return trans('common.lbl-admin');
     }
 }

@@ -34,6 +34,9 @@ return [
     'lbl-list-request' => 'List Requests',
     'lbl-rating' => 'Quality',
     'lbl-sort-price' => 'Sort Price',
+    'lbl-sort_product' => 'Sort Product',
+    'lbl-date' => 'Date',
+    'lbl-quality' => 'Quality',
     'tooltip' => [
         'create' => 'Create product',
         'update' => 'Update product',
