@@ -77,6 +77,7 @@
                     'get_login': "{{ action('Member\HomeController@getFormLogin') }}",
                     'add_cart': "{{ action('Member\OrderController@addCart') }}",
                     'remove_cart': "{{ action('Member\OrderController@removeCart') }}",
+                    'search_product': "{{ action('Member\ProductController@searchProduct') }}",
                 };
 
             </script>

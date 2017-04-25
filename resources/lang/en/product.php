@@ -37,6 +37,7 @@ return [
     'lbl-sort_product' => 'Sort Product',
     'lbl-date' => 'Date',
     'lbl-quality' => 'Quality',
+    'lbl-status' => 'Status',
     'tooltip' => [
         'create' => 'Create product',
         'update' => 'Update product',
@@ -63,5 +64,7 @@ return [
         'update-fail' => 'Update Product Fail!',
         'delete-success' => 'Delete Product Success!',
         'delete-fail' => 'Delete Product Fail!',
+        'import-success' => 'Import File Success',
+        'import-fail' => 'Import File Fail',
     ],
 ];

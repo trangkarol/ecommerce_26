@@ -15,7 +15,6 @@ use DB;
 
 class ProductController extends Controller
 {
-
     protected $productRepository;
     protected $categoryRepository;
     protected $madeIn;
@@ -221,12 +220,12 @@ class ProductController extends Controller
                     $this->productRepository->create($inputs);
                 }
             }
-
             $request->session()->flash('success', trans('product.msg.import-success'));
             DB::commit();
 
             return redirect()->action('Admin\ProductController@index');
         } catch (\Exception $e) {
+            dd($e);
             $request->session()->flash('fail', trans('product.msg.import-fail'));
             DB::rollback();
 
@@ -243,7 +242,8 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         try {
-            $input = $request->only(['name', 'sort_price', 'price_from', 'price_to', 'rating', 'parentCategory_id', 'sort_product']);
+            $input = $request->all();
+            $input['subCategory_id'] = -1;
 
             if (isset($request->subCategory_id)) {
                 $input['subCategory_id'] = $request->subCategory_id;

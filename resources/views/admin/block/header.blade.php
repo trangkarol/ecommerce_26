@@ -16,6 +16,8 @@
     <!-- js -->
     {{ Html::script('/bower_components/jquery/dist/jquery.js') }}
     {{ Html::script('/bower_components/moment/src/moment.js') }}
+    {{ Html::script('/bower_components/highcharts/highcharts.js') }}
     {{ Html::script('/bower_components/chartjs/dist/Chart.js') }}
+    {{ Html::script('/bower_components/highcharts/modules/exporting.js') }}
 @show
 <!-- end csss -->

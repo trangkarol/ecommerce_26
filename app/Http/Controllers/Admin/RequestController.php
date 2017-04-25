@@ -7,12 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Category\CategoryInterface;
 use App\Repositories\SuggestProduct\SuggestProductRepository;
 use App\Repositories\Product\ProductInterface;
+use App\Helpers\Library;
 
 class RequestController extends Controller
 {
     protected $suggestProductRepository;
     protected $categoryRepository;
+    protected $library;
     protected $productRepository;
+    protected $madeIn;
 
     /**
     * Create a new controller instance.
@@ -22,11 +25,14 @@ class RequestController extends Controller
     public function __construct(
         ProductInterface $productRepository,
         SuggestProductRepository $suggestProductRepository,
-        CategoryInterface $categoryRepository
+        CategoryInterface $categoryRepository,
+        Library $library
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->productRepository = $productRepository;
         $this->suggestProductRepository = $suggestProductRepository;
+        $this->library = $library;
+        $this->madeIn = Library::getMadeIn();
     }
 
     /**
@@ -36,8 +42,13 @@ class RequestController extends Controller
      */
     public function index()
     {
+        $ratings = $this->library->getRatings();
+        $sortPrice = $this->library->getSortPrice();
+        $sortProduct = $this->library->getSortProduct();
+        $status = $this->library->statusSuggestProduct();
         $requestProducts = $this->suggestProductRepository->getSuggestProduct();
-        return view('admin.request.index', compact('requestProducts'));
+
+        return view('admin.request.index', compact('requestProducts', 'ratings', 'sortPrice', 'sortProduct', 'status'));
     }
 
     /**
@@ -96,7 +107,7 @@ class RequestController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -107,7 +118,10 @@ class RequestController extends Controller
      */
     public function edit($id)
     {
-        //
+        $parentCategory = $this->categoryRepository->getCategoryLibrary(config('setting.mutil-level.one'));
+        $productSuggest = $this->suggestProductRepository->find($id, '*');
+
+        return view('admin.request.edit')->with(['parentCategory' => $parentCategory, 'madeIn' => $this->madeIn, 'productSuggest' => $productSuggest]);
     }
 
     /**
@@ -125,7 +139,6 @@ class RequestController extends Controller
 
             return redirect()->action('Admin\RequestController@index');
         } catch (\Exception $e) {
-            dd($e);
             $request->session()->flash('fail', trans('product.msg.cancel-fail'));
 
             return redirect()->action('Admin\RequestController@index');
@@ -162,5 +175,24 @@ class RequestController extends Controller
         $data['description'] = $product['description'];
         $data['category_id'] = $product['sub_category_id'];
         return $data;
+    }
+
+    /**
+     * search.
+     *
+     * @param  int  $categoryId
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        try {
+            $input = $request->all();
+            $requestProducts = $this->suggestProductRepository->searchProduct($input);
+            $html = view('admin.request.table_result', compact('requestProducts'))->render();
+
+            return response()->json(['result' => true, 'html' => $html]);
+        } catch (Exception $e) {
+            return response()->json('result', false);
+        }
     }
 }

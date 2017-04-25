@@ -41,7 +41,7 @@
                                     <p><span>{{ trans('product.lbl-description') }} : </span> {{ $productSuggest->description }}</p>
                                 </div>
                             </div>
-                            <div class="clearfix"></div>
+                            <div class="clearfix"> </div>
                             </div>
                         </div>
                         <div class="clearfix"> </div>

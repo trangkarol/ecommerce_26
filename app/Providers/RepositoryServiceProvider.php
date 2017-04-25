@@ -16,6 +16,8 @@ use App\Repositories\Order\OrderInterface;
 use App\Repositories\Order\OrderRepository;
 use App\Repositories\OrderDetail\OrderDetailInterface;
 use App\Repositories\OrderDetail\OrderDetailRepository;
+use App\Repositories\Rating\RatingInterface;
+use App\Repositories\Rating\RatingRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -42,5 +44,6 @@ class RepositoryServiceProvider extends ServiceProvider
         App::bind(SuggestProductInterface::class, SuggestProductRepository::class);
         App::bind(OrderInterface::class, OrderRepository::class);
         App::bind(OrderDetailInterface::class, OrderDetailRepository::class);
+        App::bind(RatingInterface::class, RatingRepository::class);
     }
 }

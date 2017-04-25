@@ -37,7 +37,7 @@ class SuggestProduct extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
-    protected $appends = ['path_images', 'price_format'];
+    protected $appends = ['path_images', 'price_format', 'status'];
 
     public function user()
     {
@@ -62,5 +62,18 @@ class SuggestProduct extends Model
     public function getPriceFormatAttribute()
     {
         return number_format($this->price, 3, ',', ',') . ' ' . trans('common.lbl-vnd');
+    }
+
+    public function getStatusAttribute()
+    {
+        if ($this->is_accept == config('setting.product_status.accpet')) {
+            return trans('common.product_status.accpet');
+        }
+
+        if ($this->is_accept == config('setting.product_status.cancel')) {
+            return trans('common.product_status.cancel');
+        }
+
+        return trans('common.product_status.warning');
     }
 }

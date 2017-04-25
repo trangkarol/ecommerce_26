@@ -13,5 +13,4 @@
     <div class="cnt-main">
         @include('member.home.product_hot')
     </div>
-    <!-- product -->
 @endsection

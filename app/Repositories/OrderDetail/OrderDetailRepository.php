@@ -40,7 +40,7 @@ class OrderDetailRepository extends BaseRepository implements OrderDetailInterfa
     public function statisticProduct()
     {
         try {
-            return $this->model->join('products', 'products.id', 'order_details.product_id')
+            $product = $this->model->join('products', 'products.id', 'order_details.product_id')
                 ->join('orders', 'orders.id', 'order_details.order_id')
                 ->join('categories', 'products.category_id', 'categories.id')
                 ->select(
@@ -49,8 +49,12 @@ class OrderDetailRepository extends BaseRepository implements OrderDetailInterfa
                     \DB::raw('SUM(order_details.total_price) as toatalPrice'),
                     'products.made_in',
                     'categories.name as categoryName'
-                    )
-                ->groupBy('order_details.product_id','products.name', 'products.made_in', 'categories.name')
+                    );
+            if ($category) {
+                $product = $product->where('categories.parent_id', $category);
+            }
+
+             $product = $product->groupBy('order_details.product_id','products.name', 'products.made_in', 'categories.name')
                 ->orderBy('numberProduct', 'toatalPrice', 'desc')
                 ->get();
         } catch (\Exception $e) {

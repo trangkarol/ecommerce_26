@@ -26,9 +26,5 @@
 @section('contentJs')
     @parent
     {{ Html::script('/member/js/common.js') }}
-    <script type="text/javascript">
-        var action = {
-            'search_product': "{{ action('Member\ProductController@searchProduct') }}",
-        };
-    </script>
 @endsection
+

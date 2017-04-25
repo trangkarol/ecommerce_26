@@ -6,7 +6,7 @@ return [
     'accept_default' => 0,
     'accept' => 1,
     'cancel' => 2,
-    'search_default' => 0,
+    'search_default' => -1,
     'default_cart' => 0,
     'defaul_select' => [
         '0' => '',
@@ -45,6 +45,12 @@ return [
     'order_status' => [
         'unpaid' => 0,
         'paid' => 1,
+        'cancel' => 2,
+    ],
+
+    'product_status' => [
+        'warning' => 0,
+        'accpet' => 1,
         'cancel' => 2,
     ],
 

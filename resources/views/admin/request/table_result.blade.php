@@ -17,13 +17,13 @@
                 <tr class= "row-accept">
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td>
-                        <a href="{{ action('Admin\RequestController@show', $product->id) }}"><img src="{{ $product->path_images }}" width="70px" height="50px" /></a>
+                        <a href="{{ action('Admin\RequestController@edit', $product->id) }}"><img src="{{ $product->path_images }}" width="70px" height="50px" /></a>
                     </td>
-                    <td><a href="{{ action('Admin\RequestController@show', $product->id) }}">{{ $product->product_name }}</a></td>
+                    <td><a href="{{ action('Admin\RequestController@edit', $product->id) }}">{{ $product->product_name }}</a></td>
                     <td>{{ $product->price_format }}</td>
                     <td class="div-description">{{ $product->description }}</td>
                     <td>{{ $product->user->name }}</td>
-                    <td>{{ $product->is_accept ? trans('product.lbl-accept') : '' }}</td>
+                    <td>{{ $product->status }}</td>
                     <td>
                         @if (!$product->is_accept)
                             <div class="col-md-6">

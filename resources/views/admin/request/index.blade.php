@@ -16,6 +16,10 @@
         <!-- end title -->
         <div class="clearfix"></div>
         @include('admin.block.messages')
+        <!-- form search -->
+        <div class="row">
+            @include('admin.request.search')
+        </div>
         <div class="row">
             <div class="x_content">
                 <div class="row">
@@ -29,7 +33,7 @@
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
-                            <div class="x_content" id="result-users">
+                            <div class="x_content" id="result-requests">
                                 <div class="table-responsive">
                                     @include('admin.request.table_result')
                                 </div>
@@ -48,10 +52,13 @@
     @parent
     {{ Html::script('/admin/js/request.js') }}
     <script type="text/javascript">
+        var action = {
+            'request_search': "{{ action('Admin\RequestController@search') }}",
+        };
+
         var trans = {
             'msg_comfirm_accpet': "{{ trans('common.msg.confirm-accept') }}",
             'msg_comfirm_cancel': "{{ trans('common.msg.confirm-cancel') }}",
-
         };
     </script>
 @endsection

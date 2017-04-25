@@ -28,6 +28,10 @@
                     <li class="@if (Request::url() == action('Admin\UserController@index')) active @endif ">
                         <a href="{{ action('Admin\UserController@index') }}"><i class="fa fa-users"></i><span> {{ trans('user.title-users') }} </span></a>
                     </li>
+                    <!-- management category-->
+                    <li class="@if (Request::url() == action('Admin\CategoryController@index')) active @endif ">
+                        <a href="{{ action('Admin\CategoryController@index') }}"><i class="fa fa-th-list"></i><span> {{ trans('category.title-category') }} </span></a>
+                    </li>
                     <!-- management products-->
                     <li class="@if (Request::url() == action('Admin\ProductController@index')) active @endif ">
                         <a href="{{ action('Admin\ProductController@index') }}"><i class="fa fa-product-hunt"></i><span> {{ trans('product.title-product') }} </span></a>

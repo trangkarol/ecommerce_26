@@ -90,6 +90,12 @@ return [
         'new' => 'New Product',
     ],
 
+    'product_status' => [
+        'accpet' => 'Accept',
+        'cancel' => 'Cancel',
+        'warning' => 'Warning',
+    ],
+
     'msg' => [
         'confirm-delete' => 'Do you want to delete this row?',
         'confirm-order' => 'Do you want to order this products?',

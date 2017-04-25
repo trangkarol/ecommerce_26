@@ -15,7 +15,7 @@
 <div class="content">
     <div class="cnt-main">
         <div class="s_hdr">
-               <h2>{{ trans('member.lbl-your-cart') }} (<span id="total-number-cart">{{ Session::has('yourCart') ? count($productCats) : 0 }}</span>)</h2>
+               <h2>{{ trans('member.lbl-your-cart') }} (<span id="total-number-cart">{{ Session::has('yourCart') ? $productCats->sum('number_order') : 0 }}</span>)</h2>
             </div>
         <div class="single-wl3">
             <div class="text1-nav">

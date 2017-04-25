@@ -27,28 +27,22 @@ class RatingRepository extends BaseRepository implements RatingInterface
      */
     public function addRating($input, $productId)
     {
-        DB::beginTransaction();
         try {
             $rating = $this->model->where('product_id', $productId)->where('user_id', Auth::check() ?: Auth::user()->id)->first();
 
             if ($rating) {
-                $result = $this->model->update($input, $rating->id);
+                $result = parent::update($input, $rating->id);
             } else {
                 $result = $this->model->create($input);
             }
 
             if ($result) {
-                DB::commit();
-
-                return $this->model->where('product_id', $productId)->where('user_id', Auth::check() ?: Auth::user()->id)->avg('point');
+                return $this->model->where('product_id', $productId)->avg('point');
             }
-
-            DB::rollback();
 
             return false;
         } catch (\Exception $e) {
-            DB::rollback();
-
+            dd($e);
             return false;
         }
     }

@@ -25,4 +25,6 @@ interface ProductInterface
     public function getProductCategory($categoryId);
 
     public function searchProduct($input);
+
+    public function changeRating($avgRating, $productId);
 }

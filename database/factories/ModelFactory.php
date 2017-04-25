@@ -31,7 +31,7 @@ $factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
 
     return [
         'name' => $faker->name,
-        'type_category' => $faker->numberBetween(0, 2),
+        'type_category' => $faker->numberBetween(0, 1),
         'parent_id' => $faker->numberBetween(1, 10),
         'image' => config('setting.images.category'),
     ];
@@ -105,7 +105,7 @@ $factory->define(App\Models\SuggestProduct::class, function (Faker\Generator $fa
         'date_manufacture' => $faker->dateTime($max = 'now'),
         'date_expiration' => $faker->dateTime($max = 'now'),
         'user_id' => $faker->randomElement($userId ?: $userId = App\Models\User::pluck('id')->toArray()),
-        'is_accept' => $faker->numberBetween(0, 1),
+        'is_accept' => $faker->numberBetween(0, 2),
         'description' => $faker->name,
     ];
 });

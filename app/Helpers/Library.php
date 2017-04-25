@@ -15,7 +15,7 @@ class Library
     public static function getMadeIn()
     {
         return [
-            '0' => trans('common.made_in.chosse'),
+            '-1' => trans('common.made_in.chosse'),
             trans('common.made_in.china') => trans('common.made_in.china'),
             trans('common.made_in.vietname') => trans('common.made_in.vietname'),
             trans('common.made_in.usa') => trans('common.made_in.usa'),
@@ -32,7 +32,7 @@ class Library
     public static function getRatings()
     {
         return [
-            '0' => trans('common.rating.chosse'),
+            '-1' => trans('common.rating.chosse'),
             '1' => trans('common.rating.one'),
             '2' => trans('common.rating.two'),
             '3' => trans('common.rating.three'),
@@ -48,7 +48,7 @@ class Library
     public static function getSortPrice()
     {
         return [
-            '0' => trans('common.price.sort'),
+            '-1' => trans('common.price.sort'),
             '1' => trans('common.price.ascending'),
             '2' => trans('common.price.decrease'),
         ];
@@ -62,7 +62,7 @@ class Library
     public static function getSortProduct()
     {
         return [
-            '0' => trans('common.product.sort'),
+            '-1' => trans('common.product.sort'),
             '1' => trans('common.product.hot'),
             '2' => trans('common.product.new'),
         ];
@@ -89,10 +89,24 @@ class Library
     public static function getStatus()
     {
         return [
-            '0' => trans('order.lbl-chosse'),
+            '-1' => trans('order.lbl-chosse'),
             config('setting.order_status.paid') => trans('order.lbl-paid'),
             config('setting.order_status.unpaid') => trans('order.lbl-unpaid'),
             config('setting.order_status.cancel') => trans('order.lbl-cancel'),
+        ];
+    }
+
+    /**
+    * get status suggesst product
+     *
+     * @return category
+     */
+    public static function statusSuggestProduct()
+    {
+        return [
+            config('setting.product_status.warning') => trans('common.product_status.warning'),
+            config('setting.product_status.accpet') => trans('common.product_status.accpet'),
+            config('setting.product_status.cancel') => trans('common.product_status.cancel'),
         ];
     }
 }

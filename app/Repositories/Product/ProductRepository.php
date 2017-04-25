@@ -65,7 +65,6 @@ class ProductRepository extends BaseRepository implements ProductInterface
 
             return true;
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
 
             return false;
@@ -93,6 +92,26 @@ class ProductRepository extends BaseRepository implements ProductInterface
             DB::commit();
 
             return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    /**
+    * function changeRating.
+     *
+     * @return true or false
+     */
+    public function changeRating($avgRating, $productId)
+    {
+        DB::beginTransaction();
+        try {
+            $result = parent::update($avgRating, $productId);
+            DB::commit();
+
+            return $result;
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -159,7 +178,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
                 \DB::raw('SUM(order_details.product_id) as numberProduct')
             )
             ->groupBy('products.id', 'products.name', 'products.image', 'products.price', 'products.avg_rating')
-            ->orderBy(\DB::raw('SUM(order_details.product_id)'), 'desc')->take(8)->get();
+            ->orderBy('numberProduct', 'desc')->take(8)->get();
     }
 
     /**
@@ -210,7 +229,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
             $products = $this->model;
 
             if ($input['parentCategory_id'] != config('setting.search_default')) {
-                $parentId = $input['subCategory_id'];
+                $parentId = $input['parentCategory_id'];
 
                 if ($input['subCategory_id'] != config('setting.search_default')) {
                     $subCategoryId = $input['subCategory_id'];
@@ -218,21 +237,23 @@ class ProductRepository extends BaseRepository implements ProductInterface
                         $query->where('id', $subCategoryId);
                     }]);
                 } else {
-                    $products = $products->with(['category' => function ($query) use ($parentId) {
+                    $products = $products->whereHas('category', function ($query) use ($parentId) {
                         $query->where('parent_id', $parentId);
-                    }]);
+                    });
                 }
+            } else {
+                $products = $products->with('category');
             }
 
             if ($input['rating'] != config('setting.search_default')) {
                 $products = $products->where('avg_rating', '>=', $input['rating']);
             }
 
-            if ($input['price_from'] != config('setting.search_default')) {
+            if (!empty($input['price_from'])) {
                 $products = $products->where('price', '>=', $input['price_from']);
             }
 
-            if ($input['price_to'] != config('setting.search_default')) {
+            if (!empty($input['price_to'])) {
                 $products = $products->where('price', '<=', $input['price_to']);
             }
 

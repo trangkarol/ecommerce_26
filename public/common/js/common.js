@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('select.search').prepend('<option value= "0" selected>All</option>');
+    $('select.search').prepend('<option value= "-1" selected>All</option>');
     jQuery(window).resize(function() {
             jQuery.colorbox.resize({width:"90%"});
         });

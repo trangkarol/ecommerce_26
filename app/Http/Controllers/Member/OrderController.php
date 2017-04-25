@@ -172,10 +172,16 @@ class OrderController extends Controller
                     $yourCarts = Session::get('yourCart');
                     $productIds = array_pluck($yourCarts, 'productId');
 
-                    if (!in_array($yourCart['productId'], $productIds)) {
-                        $yourCarts[] = $yourCart;
-                        Session::put('yourCart', $yourCarts);
+                    if (in_array($yourCart['productId'], $productIds)) {
+                        foreach ($yourCarts as $cart) {
+                            if ($cart['productId'] == $yourCart['productId']) {
+                                $yourCart['number'] = $cart['number'] + $yourCart['number'];
+                            }
+                        }
                     }
+
+                    $yourCarts[] = $yourCart;
+                    Session::put('yourCart', $yourCarts);
                 } else {
                     Session::push('yourCart', $yourCart);
                 }

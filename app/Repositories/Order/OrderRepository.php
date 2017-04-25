@@ -90,15 +90,15 @@ class OrderRepository extends BaseRepository implements OrderInterface
                 $orders = $orders->where('created_at', '<=', $input['date_to']);
             }
 
-            if ($input['price_from'] != config('setting.search_default')) {
+            if (!empty($input['price_from'])) {
                 $orders = $orders->where('price', '>=', $input['price_from']);
             }
 
-            if ($input['price_to'] != config('setting.search_default')) {
+            if (!empty($input['price_to'])) {
                 $orders = $orders->where('price', '<=', $input['price_to']);
             }
 
-            if ($input['status'] == config('setting.search_default')) {
+            if ($input['status'] != config('setting.search_default')) {
                 $orders = $orders->where('status', $input['status']);
             }
 

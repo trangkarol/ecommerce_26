@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Rating\RatingInterface;
 use App\Repositories\Product\ProductInterface;
+use DB;
 
 class RatingController extends Controller
 {
@@ -33,17 +34,31 @@ class RatingController extends Controller
     public function addRating(Request $request)
     {
         if ($request->ajax()) {
+            DB::beginTransaction();
             try {
-                //
+                $input = $request->only('point');
+                $rating = $this->ratingRepository->addRating($input, $request->productId);
+
+                if ($rating) {
+                    $avgRating = [
+                        'avg_rating' => $rating,
+                    ];
+                    // dd($rating);
+                    $product = $this->productRepository->changeRating($avgRating, $request->productId);
+
+                    if ($product) {
+                        DB::commit();
+                        return response()->json(['result' => true, 'avgRating' => $avgRating]);
+                    }
+                }
+
+                DB::rollback();
             } catch (\Exception $e) {
-                return response()->json('result', true);
+                dd($e);
+                DB::rollback();
             }
+
+            return response()->json('result', true);
         }
-
-        $ratings = Library::getRatings();
-        $products = $this->productRepository->getProduct();
-        $sortPrice = Library::getSortPrice();
-
-        return view('member.product.products', compact('products', 'ratings', 'sortPrice'));
     }
 }

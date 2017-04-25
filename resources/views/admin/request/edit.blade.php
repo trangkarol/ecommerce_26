@@ -1,0 +1,72 @@
+@extends('admin.block.master')
+<!-- title off page -->
+@section('title')
+    {{ trans('product.title-edit') }}
+@endsection
+<!-- css used for page -->
+<!-- content of page -->
+@section('content')
+    <div class="">
+        <!-- title -->
+        <div class="page-title">
+            <div class="title_left">
+                <h3>{{ trans('product.title-edit') }}</h3>
+            </div>
+        </div>
+        <!-- end title -->
+        <div class="clearfix"></div>
+        @include('admin.block.messages')
+        <div class="row">
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2> {{ trans('product.title-edit') }} </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content" id="result-requests">
+                                {!! Form::open(['action' => ['Admin\RequestController@update', $productSuggest->id], 'method' => 'PATCH', 'class' => 'form-horizontal form-label-left', 'enctype' => 'multipart/form-data']) !!}
+                                    @include('admin.request.form_request')
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-7">
+                                            <div class="col-md-3">
+                                                {{ Form::reset(trans('common.button.reset'), ['class' => 'btn btn-success']) }}
+                                            </div>
+                                            <div class="col-md-3">
+                                                {{ Form::submit(trans('common.button.edit'), ['class' => 'btn btn-success']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {!! Form::close() !!}
+                                    @include('admin.request.edit')
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+@endsection
+<!-- js used for page -->
+@section('contentJs')
+    @parent
+    {{ Html::script('/admin/js/request.js') }}
+    <script type="text/javascript">
+        var action = {
+            'request_search': "{{ action('Admin\RequestController@search') }}",
+        };
+
+        var trans = {
+            'msg_comfirm_accpet': "{{ trans('common.msg.confirm-accept') }}",
+            'msg_comfirm_cancel': "{{ trans('common.msg.confirm-cancel') }}",
+        };
+    </script>
+@endsection

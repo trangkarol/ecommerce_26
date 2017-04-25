@@ -37,13 +37,13 @@
                                             <span>{{ trans('product.lbl-quality') }}</span>
                                         </p>
                                     </div>
-                                    <div class="input-group col-md-6">
+                                    <div class="input-group col-md-6 add-cart-number">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quality">
                                                 <span class="glyphicon glyphicon-minus"></span>
                                             </button>
                                         </span>
-                                        <input type="text" name="quality" class="form-control input-number" value="1" min="1" max="5">
+                                        <input type="text" name="quality" class="form-control input-number quality" value="1" min="1" max="5">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quality">
                                                 <span class="glyphicon glyphicon-plus"></span>
@@ -52,13 +52,13 @@
                                     </div>
 
                                     <div class="input-group col-md-6">
-                                        {!! Form::button(trans('common.button.agree'), ['class' => 'btn btn-success btn-agree', 'type' => 'button']) !!}
+                                        {!! Form::button(trans('common.button.agree'), ['class' => 'btn btn-success', 'id' => Auth::check() ? 'btn-agree' : 'message', 'type' => 'button']) !!}
                                     </div>
                                 </div>
                                 <div class="single-right simpleCart_shelfItem">
                                     <h4>{{ $product->name }}</h4>
                                     <div class="block">
-                                        <div class="small ghosting"> <span class="stars">{{ $product->avg_rating }}</span> </div>
+                                        <div class="small ghosting"> <span class="stars detail-start">{{ $product->avg_rating }}</span> </div>
                                     </div>
                                     <div class="clearfix"> </div>
                                     <p class="price item_price">{{ $product->price_format }}</p>
@@ -87,6 +87,7 @@
     <script type="text/javascript">
         var trans = {
             'confirm_rating': "{{ trans('common.msg.confirm-rating') }}",
+            'msg_login': "{{ trans('common.msg.not-login') }}",
         };
 
         var action = {

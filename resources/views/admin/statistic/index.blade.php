@@ -25,7 +25,7 @@
         <div class="row">
             <div class="x_content">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
                             <h2>{{ trans('static.title-satistic-category') }}</h2>
@@ -41,7 +41,15 @@
                             <div class="clearfix"></div>
                           </div>
                           <div class="x_content">
-                            <canvas id="chart-statistic"></canvas>
+                            <div class="form-group col-md-6">
+                                {{ Form::label('category', trans('product.lbl-category'), ['class' => 'col-md-4 control-label']) }}
+                                <div class="col-md-8">
+                                    {{ Form::select('category', $categories, old('category'), ['class' => 'form-control search', 'id' => 'category']) }}
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <!-- <div id="chart-statistic" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div> -->
                           </div>
                         </div>
                     </div>

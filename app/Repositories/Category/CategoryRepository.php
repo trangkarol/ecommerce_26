@@ -131,11 +131,12 @@ class CategoryRepository extends BaseRepository implements CategoryInterface
             }
 
             //insert
-            $parentCategory = $this->model->create($this->dataCategory($parentCategory, '', config('setting.mutil-level.one')));
+            $parentCategory = $this->model->create($this->dataCategory($parentCategory, -1, config('setting.mutil-level.one')));
             $subCategory = $this->model->create($this->dataCategory($subCategory, $parentCategory->id, config('setting.mutil-level.two')));
 
             return $subCategory->id;
         } catch (\Exception $e) {
+            dd($e);
             return false;
         }
     }

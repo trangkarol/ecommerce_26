@@ -130,7 +130,7 @@ class SuggestProductRepository extends BaseRepository implements SuggestProductI
      */
     public function getSuggestProduct()
     {
-        return $this->model->with('user')->paginate(config('setting.admin.paginate'));
+        return $this->model->with('user')->orderBy('is_accept', 'asc')->paginate(config('setting.admin.paginate'));
     }
 
     /**
@@ -140,6 +140,57 @@ class SuggestProductRepository extends BaseRepository implements SuggestProductI
      */
     public function getSuggestProductUsers()
     {
-        return $this->model->where('user_id', Auth::user()->id)->paginate(config('setting.admin.paginate'));
+        return $this->model->where('user_id', Auth::user()->id)->orderBy('is_accept', 'asc')->paginate(config('setting.admin.paginate'));
+    }
+
+    /**
+    * function searchProduct($input)
+     *
+     * @return true or false
+     */
+    public function searchProduct($input)
+    {
+        try {
+            $products = $this->model;
+
+            if ($input['status'] != config('setting.search_default')) {
+                $products = $products->where('is_accept', $input['status']);
+            }
+
+            if (!empty($input['price_from'])) {
+                $products = $products->where('price', '>=', $input['price_from']);
+            }
+
+            if (!empty($input['price_to'])) {
+                $products = $products->where('price', '<=', $input['price_to']);
+            }
+
+            if (!empty($input['name'])) {
+                $products = $products->where('product_name', 'LIKE', '%' . $input['name']);
+            }
+
+            if ($input['sort_product'] == config('setting.product.hot')) {
+                $products = $products->with(['orderDetail' => function ($query) {
+                    $query->sum('product_id');
+                }]);
+            }
+
+            if ($input['sort_product'] == config('setting.product.new')) {
+                $products = $products->orderBy('created_at', 'asc');
+            }
+
+            if ($input['sort_price'] == config('setting.sort_price.asc')) {
+                $products = $products->orderBy('price', 'asc');
+            }
+
+            if ($input['sort_price'] == config('setting.sort_price.desc')) {
+                $products = $products->orderBy('price', 'desc');
+            }
+
+            return $products->orderBy('is_accept', 'asc')->paginate(12);
+        } catch (\Exception $e) {
+            dd($e);
+            return false;
+        }
     }
 }

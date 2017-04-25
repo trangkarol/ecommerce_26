@@ -22,4 +22,34 @@ $(document).ready(function() {
             }
         });
     });
+
+    // click on search
+    $(document).on('click', '#btn-search', function(){
+        search(0);
+    });
 });
+
+function search(page) {
+    var data = $('#request-search').serialize();
+    url = action['request_search'];
+    if (page) {
+        url += '?page=' + page;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        dataType: 'json',
+        data: data,
+        success:function(data) {
+            if (data.result) {
+                $('#result-requests').empty();
+                $('#result-requests').html(data.html);
+                $('.pagination').addClass('search');
+                if (page){
+                    location.hash='?page='+page;
+                }
+            }
+        }
+    });
+}

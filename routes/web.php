@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 'Admi
     Route::resource('request', 'RequestController');
     Route::resource('user', 'UserController');
     Route::resource('statistic', 'StatisticController');
+    Route::resource('category', 'CategoryController');
 
     Route::group(['prefix' => 'product'], function () {
         Route::post('/sub-category', 'ProductController@getSubCategory');
@@ -45,6 +46,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 'Admi
     Route::group(['prefix' => 'order'], function () {
         Route::post('/search', 'OrderController@search');
         Route::get('/change-status/{id}/{status}', 'OrderController@changeStatus');
+    });
+
+    Route::group(['prefix' => 'category'], function () {
+        Route::post('/search', 'CategoryController@search');
+    });
+
+    Route::group(['prefix' => 'request'], function () {
+        Route::post('/request', 'RequestController@search');
     });
 });
 

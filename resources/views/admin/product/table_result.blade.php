@@ -21,7 +21,7 @@
                     <td><a href="{{ action('Admin\ProductController@show', $product->id) }}">{{ $product->name }}</a></td>
                     <td>{{ $product->price_format }}</td>
                     <td class="div-description">{{ $product->description }}</td>
-                    <td>{{ $product->category->name }}</td>
+                    <td>{{ $product->category ? $product->category->name : '' }}</td>
                     <td>
                         <div class="col-md-6">
                             <a href ="{{ action('Admin\ProductController@edit', $product->id) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{ trans('product.tooltip.update') }}"><i class="fa fa-pencil-square-o"></i></a>
