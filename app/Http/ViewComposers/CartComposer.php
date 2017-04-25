@@ -18,23 +18,23 @@ class CartComposer
      */
     public function __construct(ProductInterface $productRepository)
     {
-        if (Session::has('yourCart')) {
-            $yourCarts = Session::get('yourCart');
+        // if (Session::has('yourCart')) {
+        //     $yourCarts = Session::get('yourCart');
 
-            $this->productIdCats = array_pluck($yourCarts, 'productId');
-            ;
-            $products = $productRepository->listProduct($this->productIdCats);
-            foreach ($yourCarts as $yourCart) {
-                foreach ($products as $product) {
-                    if ($yourCart['productId'] == $product->id) {
-                        $product->total_price = $product->price * $yourCart['number'];
-                        $product->number_order = $yourCart['number'];
-                    }
-                }
-            }
+        //     $this->productIdCats = array_pluck($yourCarts, 'productId');
+        //     ;
+        //     $products = $productRepository->listProduct($this->productIdCats);
+        //     foreach ($yourCarts as $yourCart) {
+        //         foreach ($products as $product) {
+        //             if ($yourCart['productId'] == $product->id) {
+        //                 $product->total_price = $product->price * $yourCart['number'];
+        //                 $product->number_order = $yourCart['number'];
+        //             }
+        //         }
+        //     }
 
-            $this->productCats = $products;
-        }
+        //     $this->productCats = $products;
+        // }
     }
 
     /**
