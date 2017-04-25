@@ -6,6 +6,7 @@ return [
     'lbl-total-number' => 'Total Number',
     'lbl-total-price' => 'Total Price',
     'title-satistic-category' => 'Statistic Category',
+    'title-satistic-product' => 'Title statistic product',
     'export-statistic' => 'Export Statistic',
     'lbl-category' => 'Category',
     'tooltip' => [

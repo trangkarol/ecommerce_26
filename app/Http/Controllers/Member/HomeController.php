@@ -34,6 +34,7 @@ class HomeController extends Controller
     public function index()
     {
         $product_hots = $this->productRepository->hotProduct();
+        // $product_news = $this->productRepository->newProduct();
         $categories = $this->categoryRepository->getProductHome();
 
         return view('member.home.home', compact('categories', 'product_hots'));

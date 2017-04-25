@@ -107,7 +107,7 @@ class RequestController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -119,7 +119,7 @@ class RequestController extends Controller
     public function edit($id)
     {
         $parentCategory = $this->categoryRepository->getCategoryLibrary(config('setting.mutil-level.one'));
-        $productSuggest = $this->suggestProductRepository->find($id, '*');
+        $productSuggest = $this->suggestProductRepository->find($id);
 
         return view('admin.request.edit')->with(['parentCategory' => $parentCategory, 'madeIn' => $this->madeIn, 'productSuggest' => $productSuggest]);
     }

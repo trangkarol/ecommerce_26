@@ -46,13 +46,18 @@ class StatisticController extends Controller
         //     ];
         // }
 
-        // return view('admin.statistic.index', compact('statisticCategory', 'category', 'categories'));
+        // return view('admin.statistic.index', compact('statisticCategory', 'category', 'categories'));statisticProduct
 
         $statisticCategory = $this->orderDetailRepository->statistiCategory();
-        $totalPrice = $statisticCategory->pluck('totalPrice')->all();
+        $statisticProduct = $this->orderDetailRepository->statisticProduct();
+
+        $totalPriceCategory = $statisticCategory->pluck('totalPrice')->all();
         $nameCategory = $statisticCategory->pluck('parentNameCategory')->all();
 
-        return view('admin.statistic.index', compact('statisticCategory', 'totalPrice', 'nameCategory', 'categories'));
+        $totalPriceProduct = $statisticProduct->pluck('toatalPrice')->all();
+        $nameProduct = $statisticProduct->pluck('name')->all();
+
+        return view('admin.statistic.index', compact('statisticCategory', 'totalPriceCategory', 'nameCategory', 'categories', 'totalPriceProduct', 'nameProduct'));
     }
 
     /**

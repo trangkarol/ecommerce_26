@@ -13,4 +13,9 @@
     <div class="cnt-main">
         @include('member.home.product_hot')
     </div>
+    <!-- product new-->
+    <div class="cnt-main">
+        @include('member.home.product_new')
+    </div>
+    <!-- product -->
 @endsection

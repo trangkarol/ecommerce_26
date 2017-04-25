@@ -139,8 +139,8 @@ body {
     margin-top: -10px;
 }
 .search{
-    float:left;
-    width: 33.333%;
+    /* float:left; */
+    /* width: 33.333%; */
 }
 .search input[type="text"] {
     font-size: 0.825em;
@@ -1855,7 +1855,7 @@ jm:3em;
     font-weight:400;
 }
 .close1,.close2{
-  background: url('../images/close_1.png') no-repeat 0px 0px;
+  background: url('/images/close_1.png') no-repeat 0px 0px;
   cursor: pointer;
   width: 28px;
   height: 28px;

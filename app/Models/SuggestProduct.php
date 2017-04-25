@@ -44,15 +44,15 @@ class SuggestProduct extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function setDateManufactureAttribute($value)
-    // {
-    //     $this->attributes['date_manufacture'] = date_create($value);
-    // }
+    public function setDateManufactureAttribute($value)
+    {
+        $this->attributes['date_manufacture'] = date_create($value);
+    }
 
-    // public function setDateExpirationAttribute($value)
-    // {
-    //     $this->attributes['date_expiration'] = date_create($value);
-    // }
+    public function setDateExpirationAttribute($value)
+    {
+        $this->attributes['date_expiration'] = date_create($value);
+    }
 
     public function getPathImagesAttribute()
     {
