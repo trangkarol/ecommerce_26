@@ -178,7 +178,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
                 \DB::raw('SUM(order_details.product_id) as numberProduct')
             )
             ->groupBy('products.id', 'products.name', 'products.image', 'products.price', 'products.avg_rating')
-            ->orderBy('numberProduct', 'desc')->take(8)->get();
+            ->orderBy(\DB::raw('SUM(order_details.product_id)'), 'desc')->take(8)->get();
     }
 
     /**
