@@ -49,7 +49,7 @@ $factory->define(App\Models\Product::class, function (Faker\Generator $faker) {
         'made_in' => $faker->company,
         'date_manufacture' => $faker->dateTime($max = 'now'),
         'date_expiration' => $faker->dateTime($max = 'now'),
-        'avg_rating' => $faker->numberBetween(1.5, 5),
+        'avg_rating' => $faker->numberBetween(1.5, 4.5),
         'description' => $faker->name,
     ];
 });

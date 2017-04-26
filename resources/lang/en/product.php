@@ -32,7 +32,7 @@ return [
     'lbl-customer' => 'Customer',
     'lbl-list-product' => 'List Products',
     'lbl-list-request' => 'List Requests',
-    'lbl-rating' => 'Quality',
+    'lbl-rating' => 'Rating',
     'lbl-sort-price' => 'Sort Price',
     'lbl-sort_product' => 'Sort Product',
     'lbl-date' => 'Date',

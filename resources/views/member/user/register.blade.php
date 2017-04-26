@@ -13,6 +13,7 @@
         @include('member.product.viewed_product')
         </div>
         <div class="content">
+            @include('admin.block.messages')
             <div class="cnt-main">
                 <div class="form-w3agile form1">
                     <h3>{{ trans('common.title-register') }}</h3>

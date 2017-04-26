@@ -1,6 +1,12 @@
 $(document).ready(function () {
-    $('#category').prepend('<option value= "0" selected>' + trans['choose_category'] + '</option>');
-        getSubCategory();
+    var selected = '';
+    if ($('#sub_id').val() == 0) {
+        selected = 'selected';
+    }
+
+    $('#category').prepend('<option value= "0"' + selected + '>' + trans['choose_category'] + '</option>');
+    getSubCategory();
+
     $(document).on('click', '#new-category', function () {
         $('.div-category').toggle();
         $('.old-category').toggle();
@@ -15,11 +21,6 @@ $(document).ready(function () {
         $(this).prop('id', 'new-category');
     });
 
-    // change category one
-    $(document).on('change', '#category',function() {
-        getSubCategory();
-    });
-
     // delelete
     $(document).on('click', '.btn-delete', function(event) {
         $(this).parents('.form-delete').addClass('current');
@@ -31,24 +32,3 @@ $(document).ready(function () {
         });
     });
 });
-
-function getSubCategory() {
-    var parent_id = $('#category').val();
-    var sub_id = $('#sub_id').val();
-    console.log(parent_id);
-    $.ajax({
-        type: 'POST',
-        url: action['product_sub_category'],
-        dataType: 'json',
-        data: {
-            parent_id: parent_id,
-            sub_id: sub_id,
-        },
-        success:function(data) {
-            if (data.result) {
-                $('#sub-category').empty();
-                $('#sub-category').html(data.html);
-            }
-        }
-    });
-}

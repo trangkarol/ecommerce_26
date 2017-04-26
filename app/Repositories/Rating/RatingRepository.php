@@ -28,7 +28,7 @@ class RatingRepository extends BaseRepository implements RatingInterface
     public function addRating($input, $productId)
     {
         try {
-            $rating = $this->model->where('product_id', $productId)->where('user_id', Auth::check() ?: Auth::user()->id)->first();
+            $rating = $this->model->where('product_id', $productId)->where('user_id', Auth::user()->id)->first();
 
             if ($rating) {
                 $result = parent::update($input, $rating->id);

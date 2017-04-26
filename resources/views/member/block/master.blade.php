@@ -83,6 +83,7 @@
                     'add_cart': "{{ action('Member\OrderController@addCart') }}",
                     'remove_cart': "{{ action('Member\OrderController@removeCart') }}",
                     'search_product': "{{ action('Member\ProductController@searchProduct') }}",
+                    'product_sub_category': "{{ action('Member\SuggestProductController@getCategory') }}",
                 };
 
             </script>

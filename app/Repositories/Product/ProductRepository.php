@@ -246,7 +246,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
             }
 
             if ($input['rating'] != config('setting.search_default')) {
-                $products = $products->where('avg_rating', '>=', $input['rating']);
+                $products = $products->where('avg_rating', $input['rating']);
             }
 
             if (!empty($input['price_from'])) {

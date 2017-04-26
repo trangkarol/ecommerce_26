@@ -17,6 +17,7 @@
     <div class="sidebar">
         @include('member.product.viewed_product')
         </div>
+        @include('admin.block.messages')
         <div class="content">
             <div class="cnt-main">
                 <div class="login">

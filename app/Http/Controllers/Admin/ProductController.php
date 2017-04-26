@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Product\ProductInterface;
 use App\Repositories\Category\CategoryInterface;
-use App\Http\Requests\Product\UpdateProductRequest;
-use App\Http\Requests\Product\InsertProductRequest;
+use App\Http\Requests\Product\ProductRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ReportController as Report;
 use App\Helpers\Library;
@@ -71,7 +70,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InsertProductRequest $request)
+    public function store(ProductRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -127,7 +126,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         try {
             $result = $this->productRepository->update($request, $id);

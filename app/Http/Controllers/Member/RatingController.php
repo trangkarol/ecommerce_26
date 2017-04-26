@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Rating\RatingInterface;
 use App\Repositories\Product\ProductInterface;
 use DB;
+use Auth;
 
 class RatingController extends Controller
 {
@@ -37,6 +38,8 @@ class RatingController extends Controller
             DB::beginTransaction();
             try {
                 $input = $request->only('point');
+                $input['user_id'] = Auth::user()->id;
+                $input['product_id'] = $request->productId;
                 $rating = $this->ratingRepository->addRating($input, $request->productId);
 
                 if ($rating) {

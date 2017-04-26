@@ -14,7 +14,7 @@ class EditAvgRatingToProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->integer('avg_rating')->nullable()->change();
+            $table->float('avg_rating')->nullable()->change();
         });
     }
 

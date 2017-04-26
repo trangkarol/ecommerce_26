@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Helpers\Library;
 use App\Http\Controllers\Controller;
 use App\Repositories\SuggestProduct\SuggestProductRepository;
+use App\Http\Requests\Product\SuggestProductRequest;
 use App\Repositories\Category\CategoryInterface;
 use Auth;
 
@@ -59,7 +60,7 @@ class SuggestProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SuggestProductRequest $request)
     {
         $input = $request->only(['product_name', 'made_in', 'number_current', 'description', 'price', 'category_id', 'category_name', 'sub_category_id', 'sub_category_name', 'date_manufacture', 'date_expiration']);
         $input['images'] = isset($request->file) ? $this->suggestProductRepository->uploadImages(null, $request->file, null) : config('settings.images.product');
@@ -68,8 +69,12 @@ class SuggestProductController extends Controller
         $result = $this->suggestProductRepository->create($input);
 
         if ($result) {
+            $request->session()->flash('success', trans('product.msg.insert-success'));
+
             return redirect()->action('Member\SuggestProductController@show', $result->id);
         }
+
+        $request->session()->flash('fail', trans('product.msg.insert-fail'));
 
         return redirect()->action('Member\SuggestProductController@index');
     }
@@ -109,7 +114,7 @@ class SuggestProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SuggestProductRequest $request, $id)
     {
         $input = $request->only(['product_name', 'made_in', 'number_current', 'description', 'price', 'category_id', 'category_name', 'sub_category_id', 'sub_category_name']);
         $input['is_accept'] = config('setting.accept_default');
@@ -117,10 +122,14 @@ class SuggestProductController extends Controller
         $result = $this->suggestProductRepository->updateSuggestProduct($input, $request->file, $id);
 
         if ($result) {
-            return redirect()->action('Member\SuggestProductController@show', $result->id);
+            $request->session()->flash('success', trans('product.msg.update-success'));
+
+            return redirect()->action('Member\SuggestProductController@index');
         }
 
-        return redirect()->action('Member\SuggestProductController@index');
+        $request->session()->flash('fail', trans('product.msg.update-fail'));
+
+        return redirect()->back();
     }
 
     /**
@@ -129,9 +138,17 @@ class SuggestProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $this->suggestProductRepository->delete($id);
+        $result = $this->suggestProductRepository->delete($id);
+
+        if ($result) {
+            $request->session()->flash('success', trans('product.msg.delete-success'));
+
+            return redirect()->action('Member\SuggestProductController@index');
+        }
+
+        $request->session()->flash('fail', trans('product.msg.delete-fail'));
 
         return redirect()->action('Member\SuggestProductController@index');
     }

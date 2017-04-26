@@ -22,9 +22,3 @@
 <div class="clear"></div>
 </div>
 @endsection
-<!-- js used for page -->
-@section('contentJs')
-    @parent
-    {{ Html::script('/member/js/common.js') }}
-@endsection
-

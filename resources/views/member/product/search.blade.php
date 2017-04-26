@@ -50,6 +50,7 @@
                     <div class="form-group col-md-6" id="sub-category">
 
                     </div>
+                    <div class="clearfix"></div>
                     <div class="form-group col-md-6">
                         {{ Form::label('sort_product', trans('product.lbl-sort_product'), ['class' => 'col-md-4 control-label']) }}
                         <div class="col-md-8">

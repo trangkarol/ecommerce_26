@@ -14,6 +14,7 @@
 </div>
 <div class="content">
     <div class="cnt-main">
+        @include('admin.block.messages')
         <div class="add-request">
             <a href="{{ action('Member\SuggestProductController@create') }}" class="btn btn-success"><i class="fa fa-plus " ></i></a>
         </div>

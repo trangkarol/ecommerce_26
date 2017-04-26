@@ -36,13 +36,13 @@
                                         <p>
                                             <span>{{ trans('product.lbl-rating') }}</span>
                                         </p>
-                                        <input id="input-1" name="input-1" value="" class="rating" data-min="0" data-max="5" data-step="1" data-show-clear="true" data-show-caption="true">
+                                        <input id="input-1" name="input-1" value="" class="rating point" data-min="0" data-max="5" data-step="0.5" data-show-clear="true" data-show-caption="true">
                                     </div>
                                     <div class="input-group col-md-6">
                                         {!! Form::button(trans('common.button.agree'), ['class' => 'btn btn-success', 'id' => Auth::check() ? 'btn-agree' : 'message', 'type' => 'button']) !!}
                                     </div>
                                 </div>
-                                <div class="single-right simpleCart_shelfItem">
+                                <div class="single-right simpleCart_shelfItem div-point">
                                     <h4>{{ $product->name }}</h4>
                                     @include('member.product.rating')
                                     <div class="clearfix"> </div>

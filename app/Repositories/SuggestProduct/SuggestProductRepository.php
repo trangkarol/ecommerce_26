@@ -35,6 +35,7 @@ class SuggestProductRepository extends BaseRepository implements SuggestProductI
 
             return $result;
         } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
 
             return false;
