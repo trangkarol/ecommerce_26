@@ -54,11 +54,13 @@ $(document).ready(function () {
 
     $(document).on('click', '#message', function () {
         event.preventDefault();
-        bootbox.alert(trans['msg_login']);
+        bootbox.alert(trans['msg_login'], function () {
+            window.location.href = action['get_login'];
+        });
     });
 
     //handel pagination by ajax
-    $(document).on('click', '.search.pagination a', function(event) {
+    $(document).on('click', '.search.pagination a', function (event) {
         event.preventDefault();
         var page = $(this).attr('href').split('page=')[1];
         search(page);
@@ -71,13 +73,13 @@ $(document).ready(function () {
     });
 
     $('#input-1').rating();
-    $('#input-3').rating({displayOnly: true, step: 0.5});
+    $('.rating-show').rating({displayOnly: true, step: 0.5});
 
     $('.close1').on('click', function(event) {
         $(this).parents('.cart-detail').addClass('curent-detail-cart');
-        bootbox.confirm(trans['confirm_delete_order'], function(result) {
+        bootbox.confirm(trans['confirm_delete_order'], function (result) {
             if(result) {
-                $('.cart-detail.curent-detail-cart').fadeOut('slow', function() {
+                $('.cart-detail.curent-detail-cart').fadeOut('slow', function () {
                     removeCart();
                     $(this).remove();
                 });
@@ -89,7 +91,7 @@ $(document).ready(function () {
 
     cart();
 
-    $(document).on('click', '#btn-search',function() {
+    $(document).on('click', '#btn-search',function () {
         // when event search is firstly
         search(0);
     });
@@ -103,13 +105,13 @@ function cart() {
         $(this).parent().removeClass('cart-current');
     });
 
-    $('.btn-number').click(function(e){
+    $('.btn-number').click(function (e){
         e.preventDefault();
         $(this).parents('.add-cart-number').addClass('current');
         fieldName = $(this).attr('data-field');
         type      = $(this).attr('data-type');
         var input = $('.add-cart-number.current').find("input[name='"+fieldName+"']");
-        $(this).parents('.add-cart-number').removeClass('current');
+        // $(this).parents('.add-cart-number').removeClass('current');
         var currentVal = parseInt(input.val());
         if (!isNaN(currentVal)) {
             if(type == 'minus') {
@@ -136,11 +138,11 @@ function cart() {
         }
     });
 
-    $('.add-cart-number').find('.input-number').focusin(function(){
+    $('.add-cart-number.current').find('.input-number').focusin(function (){
        $(this).data('oldValue', $(this).val());
     });
 
-    $('.input-number').change(function() {
+    $('.add-cart-number.current').find('.input-number').change(function () {
         console.log('sdsdsdsds');
         minValue =  parseInt($(this).attr('min'));
         maxValue =  parseInt($(this).attr('max'));
@@ -182,7 +184,7 @@ function getFormLogin() {
         type: 'GET',
         url: action['get_login'],
         dataType: 'json',
-        success:function(data) {
+        success:function (data) {
             if (data.result) {
                 $.colorbox({ html: data.html });
             }

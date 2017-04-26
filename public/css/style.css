@@ -3442,7 +3442,7 @@ h3.tittle1, h3.tittle {
     list-style: none;
 }
 
-.cart.box_1:hover .yourCart {
+.show-cart-detail:hover .yourCart {
     display: block;
 }
 
@@ -3512,4 +3512,9 @@ span.star {
 
 .rating-stars {
     margin: 0% 6%;
+}
+
+.div-star-left {
+    margin-left: -20px;
+    margin-top: -16px;
 }

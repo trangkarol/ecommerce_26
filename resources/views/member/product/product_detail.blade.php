@@ -16,9 +16,8 @@
 <div class="content">
     <div class="cnt-main">
             <div class="single-wl3">
-                <div class="container">
                     <div class="single-grids">
-                        <div class="col-md-9 single-grid">
+                        <div class="col-md-12 single-grid">
                             <div clas="single-top">
                                 <div class="single-left">
                                     {{ Form::hidden('productId', $product->id,['class' => 'btn btn-success btn-agree', 'id' => 'productId', 'type' => 'button']) }}
@@ -36,7 +35,7 @@
                                         <p>
                                             <span>{{ trans('product.lbl-rating') }}</span>
                                         </p>
-                                        <input id="input-1" name="input-1" value="" class="rating point" data-min="0" data-max="5" data-step="0.5" data-show-clear="true" data-show-caption="true">
+                                        <input id="input-1" name="input-1" value="" class="rating point" data-min="0" data-max="5" data-step="0.5" data-show-clear="true" data-show-caption="false">
                                     </div>
                                     <div class="input-group col-md-6">
                                         {!! Form::button(trans('common.button.agree'), ['class' => 'btn btn-success', 'id' => Auth::check() ? 'btn-agree' : 'message', 'type' => 'button']) !!}
@@ -61,7 +60,6 @@
                         <div class="clearfix"> </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
     <div class="clear"></div>
@@ -73,10 +71,6 @@
         var trans = {
             'confirm_rating': "{{ trans('common.msg.confirm-rating') }}",
             'msg_login': "{{ trans('common.msg.not-login') }}",
-        };
-
-        var action = {
-            'rating_product': "{{ action('Member\RatingController@addRating') }}",
         };
     </script>
 @endsection

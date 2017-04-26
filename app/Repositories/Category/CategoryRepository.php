@@ -48,7 +48,7 @@ class CategoryRepository extends BaseRepository implements CategoryInterface
      */
     public function getMenu()
     {
-        return $this->model->with('subCategory')->get();
+        return $this->model->with('subCategory')->where('type_category', config('setting.mutil-level.one'))->get();
     }
 
     /**

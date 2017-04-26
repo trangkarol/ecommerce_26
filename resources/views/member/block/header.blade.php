@@ -27,7 +27,7 @@
                 <li><a href="{{ action('Auth\LoginController@index') }}">{{ trans('common.title-login') }}</a></li>
                 <li><a href="{{ action('Auth\RegisterController@index') }}" id="resgiter">{{ trans('common.title-register') }}</a></li>
             @endif
-            <li class="cart box_1" id="div-your-cart">@include('member.cart.your_cart')</li>
+            @include('member.cart.your_cart')
             <div class="clear"></div>
         </ul>
     </div>

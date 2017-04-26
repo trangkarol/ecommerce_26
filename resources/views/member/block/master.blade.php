@@ -79,11 +79,12 @@
                 };
 
                 var action = {
-                    'get_login': "{{ action('Member\HomeController@getFormLogin') }}",
+                    'get_login': "{{ action('Auth\LoginController@index') }}",
                     'add_cart': "{{ action('Member\OrderController@addCart') }}",
                     'remove_cart': "{{ action('Member\OrderController@removeCart') }}",
                     'search_product': "{{ action('Member\ProductController@searchProduct') }}",
                     'product_sub_category': "{{ action('Member\SuggestProductController@getCategory') }}",
+                    'rating_product': "{{ action('Member\RatingController@addRating') }}",
                 };
 
             </script>

@@ -10,7 +10,9 @@
                 </div>
                 <div class="recent-right">
                     <h6 class="best2"><a href="{{ action('Member\ProductController@show', $product->id) }}">{{ $product->name }} </a></h6>
-                    @include('member.product.rating')
+                    <div class="div-star-left">
+                        @include('member.product.rating')
+                    </div>
                     <div class="clearfix"> </div>
                     <span class=" price-in1">{{ $product->price_format }}</span>
                 </div>

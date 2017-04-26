@@ -5,6 +5,9 @@
         </div>
         <div class="text1-nav">
             <ul>
+                <li class="{{ !$menu->subCategory->emty() ? dropdow : '' }}">
+                    <a href="products.html">{{ $menu->name }}</a></li>
+                </li>
                 @foreach ($menu->subCategory as $subCategory)
                     <li><a href="products.html">{{ $subCategory->name }}</a></li>
                 @endforeach
