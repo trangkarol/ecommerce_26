@@ -108,7 +108,7 @@ class ProductController extends Controller
     {
         if ($request->ajax()) {
             try {
-                $input = $request->only(['name', 'sort_price', 'price_from', 'price_to', 'rating', 'parentCategory_id', 'sort_product']);
+                $input = $request->all();
                 $input['subCategory_id'] = -1;
 
                 if (isset($request->subCategory_id)) {

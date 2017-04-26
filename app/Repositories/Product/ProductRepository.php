@@ -136,7 +136,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
      */
     public function getProductCategory($categoryId)
     {
-        return $this->model->whereHas('category', function($query) use ($categoryId) {
+        return $this->model->whereHas('category', function ($query) use ($categoryId) {
             $query->where('parent_id', $categoryId);
         })->paginate(12);
     }
@@ -258,7 +258,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
             }
 
             if (!empty($input['name'])) {
-                $products = $products->where('name', 'LIKE', '%' . $input['name']);
+                $products = $products->where('name', 'LIKE', '%' . $input['name'] . '%');
             }
 
             if ($input['sort_product'] == config('setting.product.hot')) {

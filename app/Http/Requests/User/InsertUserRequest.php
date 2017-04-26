@@ -23,6 +23,7 @@ class InsertUserRequest extends FormRequest
      */
     public function rules()
     {
+        // dd($this->request);
         $email = null;
         switch ($this->method()) {
             case 'PUT':

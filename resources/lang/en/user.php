@@ -63,5 +63,7 @@ return [
         'export-success' => 'Export Users Success!',
         'export-fail' => 'Export Users Fail!',
         'fail' => 'The process has failed!',
+        'phone_number-min' => 'The phone number must be at least 12 characters!',
+        'phone_number-max' => 'The phone number must be at max 12 characters!',
     ],
 ];

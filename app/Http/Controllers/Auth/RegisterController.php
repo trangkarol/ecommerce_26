@@ -60,6 +60,7 @@ class RegisterController extends Controller
     public function index()
     {
         $menus = $this->categoryRepository->getMenu();
+
         return view('member.user.register', compact('menus'));
     }
 
@@ -72,6 +73,7 @@ class RegisterController extends Controller
     public function register(InsertUserRequest $request)
     {
         $result = $this->userRepository->register($request, config('setting.role.user'));
+
         if ($result) {
             Auth::login($result, true);
         }

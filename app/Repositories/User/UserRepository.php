@@ -128,6 +128,7 @@ class UserRepository extends BaseRepository implements UserInterface
 
             return $result;
         } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
 
             return false;

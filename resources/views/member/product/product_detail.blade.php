@@ -34,32 +34,17 @@
                                     @include('member.cart.add_cart')
                                     <div class="description">
                                         <p>
-                                            <span>{{ trans('product.lbl-quality') }}</span>
+                                            <span>{{ trans('product.lbl-rating') }}</span>
                                         </p>
+                                        <input id="input-1" name="input-1" value="" class="rating" data-min="0" data-max="5" data-step="1" data-show-clear="true" data-show-caption="true">
                                     </div>
-                                    <div class="input-group col-md-6 add-cart-number">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quality">
-                                                <span class="glyphicon glyphicon-minus"></span>
-                                            </button>
-                                        </span>
-                                        <input type="text" name="quality" class="form-control input-number quality" value="1" min="1" max="5">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quality">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-
                                     <div class="input-group col-md-6">
                                         {!! Form::button(trans('common.button.agree'), ['class' => 'btn btn-success', 'id' => Auth::check() ? 'btn-agree' : 'message', 'type' => 'button']) !!}
                                     </div>
                                 </div>
                                 <div class="single-right simpleCart_shelfItem">
                                     <h4>{{ $product->name }}</h4>
-                                    <div class="block">
-                                        <div class="small ghosting"> <span class="stars detail-start">{{ $product->avg_rating }}</span> </div>
-                                    </div>
+                                    @include('member.product.rating')
                                     <div class="clearfix"> </div>
                                     <p class="price item_price">{{ $product->price_format }}</p>
                                     <div class="description">

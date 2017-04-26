@@ -3505,3 +3505,11 @@ span.stars span {
 .number-cart {
     padding-left: 5px !important;
 }
+
+span.star {
+    font-size: 60%;
+}
+
+.rating-stars {
+    margin: 0% 6%;
+}

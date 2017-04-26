@@ -20,6 +20,8 @@
             {{ Html::style('//fonts.googleapis.com/css?family=Cagliostro') }}
             {{ Html::style('/jquery-colorbox/example3/colorbox.css') }}
             {{ Html::style('////fonts.googleapis.com/css?family=Cabin+Condensed') }}
+            {{ Html::style('/bower_components/bootstrap-star-rating/css/star-rating.min.css') }}
+            {{ Html::style('/bower_components/bootstrap-star-rating/themes/krajee-svg/theme.min.css') }}
         @show
     </head>
     <body>
@@ -66,6 +68,9 @@
             {{ Html::script('/jquery-colorbox/jquery.colorbox-min.js') }}
             {{ Html::script('/common/js/common.js') }}
             {{ Html::script('/common/js/bootbox.min.js') }}
+            {{ Html::script('/bower_components/bootstrap-star-rating/js/star-rating.min.js') }}
+            {{ Html::script('/bower_components/bootstrap-star-rating/js/star-rating_locale_LANG.js') }}
+            {{ Html::script('/bower_components/bootstrap-star-rating/themes/krajee-svg/theme.js') }}
             <script type="text/javascript">
                 var trans = {
                     'confirm_order': "{{ trans('common.msg.confirm-order') }}",

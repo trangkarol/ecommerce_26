@@ -16,9 +16,7 @@
                     <div class="ribben1">
                         <p>{{ trans('common.lbl-hot') }}</p>
                     </div>
-                    <div class="block">
-                        <div class="small ghosting"> <span class="stars">{{ $product->avg_rating }}</span> </div>
-                    </div>
+                    @include('member.product.rating')
                     <div class="women">
                         <h6><a href="{{ action('Member\ProductController@show', $product->id) }}">{{ $product->name }}</a></h6>
                         <span class="size">{{ $product->made_in }}</span>

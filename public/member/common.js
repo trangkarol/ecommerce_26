@@ -112,7 +112,8 @@ $(function() {
         })
     });
 
-    $('span.stars').stars();
+    $('#input-1').rating();
+    $('#input-3').rating({displayOnly: true, step: 0.5});
 });
 
 $.fn.stars = function() {
