@@ -46,6 +46,11 @@ class Product extends Model
         return $this->belongsToMany(User::class, 'ratings')->withPivot('point')->withTimestamps();
     }
 
+    public function comments()
+    {
+        return $this->belongsToMany(User::class, 'comments')->withPivot('content', 'parent_id')->withTimestamps();
+    }
+
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_details')->withPivot('number', 'total_price')->withTimestamps();

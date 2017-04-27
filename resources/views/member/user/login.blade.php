@@ -17,10 +17,10 @@
     <div class="sidebar">
         @include('member.product.viewed_product')
         </div>
-        @include('admin.block.messages')
         <div class="content">
             <div class="cnt-main">
                 <div class="login">
+                @include('admin.block.messages')
                 <div class="form-w3agile form1">
                         <h3>{{ trans('common.title-login') }} {{ trans('common.lbl-or') }} <a href="{{ action('Auth\RegisterController@index') }}">{{ trans('common.title-register') }}</h3>
                             <div class="col-md-offset-3 omb_socialButtons">
@@ -45,7 +45,7 @@
                             </div>
                             {!! Form::open(['action' => 'Auth\LoginController@login', 'method' => 'POST', 'class' => 'omb_loginForm']) !!}
 
-                            <div class="input-group{{ $errors->has('email') ? ' has-error' : '' }} col-md-6 col-md-offset-3">
+                            <div class="input-group {{ $errors->has('email') ? ' has-error' : '' }} col-md-6 col-md-offset-3">
                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                 {{ Form::text('email', old('email'), ['id' => 'email', 'required', 'placeholder' => 'someone@gmail.com', 'class' => 'form-control']) }}
 
@@ -57,7 +57,7 @@
                                 <div class="clearfix"></div>
                             </div>
 
-                            <div class="input-group{{ $errors->has('password') ? ' has-error' : '' }} col-md-6 col-md-offset-3" >
+                            <div class="input-group {{ $errors->has('password') ? ' has-error' : '' }} col-md-6 col-md-offset-3" >
                                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                 {{ Form::password('password', ['id' => 'password', 'required', 'placeholder' => '****************', 'class' => 'form-control']) }}
 

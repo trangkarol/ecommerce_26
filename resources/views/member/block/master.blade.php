@@ -9,7 +9,6 @@
         @section('contentCss')
             {{ Html::style('/bower_components/bootstrap/dist/css/bootstrap.min.css') }}
             {{ Html::style('/bower_components/components-font-awesome/css/font-awesome.min.css') }}
-            {{ Html::style('/css/bootstrap.css') }}
             {{ Html::style('/css/style.css') }}
             {{ Html::style('/css/plugins/style.css') }}
             {{ Html::style('/css/coreSlider.css') }}

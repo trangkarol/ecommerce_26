@@ -51,7 +51,7 @@ return [
         'update-fail' => 'Update user fail!',
         'delete-success' => 'Delete user seccessfuly!',
         'delete-fail' => 'Delete user fail!',
-        'login-fail' => 'Login fail!',
+        'login-fail' => 'Email or password is fail!',
         'login-success' => 'Login success!',
         'change-password-success' => 'Change password success!',
         'change-password-fail' => 'Change password fail!',
@@ -65,5 +65,6 @@ return [
         'fail' => 'The process has failed!',
         'phone_number-min' => 'The phone number must be at least 12 characters!',
         'phone_number-max' => 'The phone number must be at max 12 characters!',
+        'address-min' => 'The address must be at least 6 characters!',
     ],
 ];

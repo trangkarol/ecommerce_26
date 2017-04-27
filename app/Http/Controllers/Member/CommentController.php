@@ -3,29 +3,10 @@
 namespace App\Http\Controllers\Member;
 
 use Illuminate\Http\Request;
-use App\Repositories\Product\ProductInterface;
-use App\Repositories\Category\CategoryInterface;
 use App\Http\Controllers\Controller;
-use Session;
 
-class HomeController extends Controller
+class CommentController extends Controller
 {
-    protected $categoryRepository;
-    protected $productRepository;
-
-    /**
-    * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(
-        CategoryInterface $categoryRepository,
-        ProductInterface $productRepository
-    ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->productRepository = $productRepository;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -33,10 +14,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $product_hots = $this->productRepository->hotProduct();
-        $categories = $this->categoryRepository->getProductHome();
-
-        return view('member.home.home', compact('categories', 'product_hots'));
+        //
     }
 
     /**
@@ -103,22 +81,5 @@ class HomeController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * getFormLogin.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function getFormLogin()
-    {
-        try {
-            $html = view('member.user.login')->render();
-
-            return response()->json(['result' => true, 'html' => $html]);
-        } catch (\Exception $e) {
-            return response()->json('result', true);
-        }
     }
 }

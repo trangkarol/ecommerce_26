@@ -29,6 +29,12 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('click', '.drop-down-menu', function () {
+        $('.drop-down-menu').removeClass('current-menu');
+        $(this).addClass('current-menu');
+         $('.drop-down-menul.current').find('drop-down').toggle();
+    });
+
     // change category one
     $(document).on('change', '#category',function() {
         getSubCategory();

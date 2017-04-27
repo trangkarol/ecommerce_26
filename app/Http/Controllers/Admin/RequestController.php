@@ -88,10 +88,13 @@ class RequestController extends Controller
 
             $product = $this->dataProduct($productSuggest);
             $this->suggestProductRepository->changeAccept($suggestId, config('setting.accept'));
-            $this->productRepository->saveRequestProduct($product);
-            $request->session()->flash('success', trans('product.msg.insert-success'));
+            $requestProduct = $this->productRepository->saveRequestProduct($product);
 
-            return redirect()->action('Admin\RequestController@index');
+            if ($requestProduct) {
+                $request->session()->flash('success', trans('product.msg.insert-success'));
+
+                return redirect()->action('Admin\ProductController@update', $requestProduct->id);
+            }
         } catch (\Exception $e) {
             $request->session()->flash('fail', trans('product.msg.insert-fail'));
 
@@ -134,7 +137,7 @@ class RequestController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $this->suggestProductRepository->changeAccept($id, config('setting.cancel'));
+            $result = $this->suggestProductRepository->changeAccept($id, config('setting.cancel'));
             $request->session()->flash('success', trans('product.msg.cancel-success'));
 
             return redirect()->action('Admin\RequestController@index');

@@ -55,7 +55,7 @@
                             <!-- like,share -->
                             <div class="fb-like" data-share="true" data-width="450" data-show-faces="true">
                             </div>
-                            <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#{{ action('Member\ProductController@show', $product->id) }}" data-numposts="5"></div>
+                            @include('member.product.comment_product')
                         </div>
                         <div class="clearfix"> </div>
                     </div>

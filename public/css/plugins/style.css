@@ -76,7 +76,7 @@ body {
     content:url('../images/arrow.png');
 }
 .nav li.active a{
-    color:#97b538;
+    color: #97b538 !important;
 }
 .nav li {
     padding: 0px 16px;
