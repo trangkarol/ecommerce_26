@@ -109,3 +109,15 @@ $factory->define(App\Models\SuggestProduct::class, function (Faker\Generator $fa
         'description' => $faker->name,
     ];
 });
+
+$factory->define(App\Models\Comment::class, function (Faker\Generator $faker) {
+    static $userId;
+    static $productId;
+
+    return [
+        'user_id' => $faker->randomElement($userId ?: $userId = App\Models\User::pluck('id')->toArray()),
+        'product_id' => $faker->randomElement($productId ?: $productId = App\Models\Product::pluck('id')->toArray()),
+        'content' => $faker->name,
+        'parent_id' => $faker->numberBetween(0, 5),
+    ];
+});

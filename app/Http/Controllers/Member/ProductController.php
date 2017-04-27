@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductInterface;
 use App\Repositories\Category\CategoryInterface;
+use App\Repositories\Comment\CommentInterface;
 use App\Http\Controllers\Controller;
 use App\Helpers\Library;
 use Session;
@@ -13,6 +14,7 @@ class ProductController extends Controller
 {
     protected $categoryRepository;
     protected $productRepository;
+    protected $commentRepository;
     protected $library;
 
 
@@ -24,10 +26,12 @@ class ProductController extends Controller
     public function __construct(
         CategoryInterface $categoryRepository,
         ProductInterface $productRepository,
+        CommentInterface $commentRepository,
         Library $library
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->productRepository = $productRepository;
+        $this->commentRepository = $commentRepository;
         $this->library = $library;
     }
 
@@ -57,7 +61,8 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->findProduct($id);
         $relatedProducts = $this->productRepository->relatedProduct($product->category_id, $product->id);
-
+        $comment = $this->commentRepository->getComment($id);
+        dd($comment->toArray());
         //handel viewed products
         $viewedProduct = [
             'productId' => $id,
