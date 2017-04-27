@@ -49,7 +49,7 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('click', '#btn-agree', function () {
+    $(document).on('change', '.point', function () {
         event.preventDefault();
         bootbox.confirm(trans['confirm_rating'], function(result) {
             if(result) {
@@ -58,10 +58,19 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('change', '.message-login', function () {
+        event.preventDefault();
+        bootbox.alert(trans['msg_login'], function () {
+            urlCall = window.location.pathname.replace(/\//g, '-');
+            window.location.href = '/login/' + urlCall;
+        });
+    });
+
     $(document).on('click', '#message', function () {
         event.preventDefault();
         bootbox.alert(trans['msg_login'], function () {
-            window.location.href = action['get_login'];
+            urlCall = window.location.pathname.replace(/\//g, '-');
+            window.location.href = '/login/' + urlCall;
         });
     });
 
@@ -268,7 +277,7 @@ function search(page) {
 function rating() {
     var productId = $('#productId').val();
     var point = $('.point').val();
-    console.log(point);
+
     $.ajax({
         type: 'POST',
         url: action['rating_product'],
@@ -278,10 +287,9 @@ function rating() {
             point: point,
         },
         success:function(data) {
-            console.log( data.avgRating.avg_rating);
             if (data.result) {
-                $('.div-point').find('#input-3').val(data.avgRating.avg_rating);
-                $('.rating').rating();
+                $('.div-point').find('#input-3').val(data.avgRating.avg_rating).rating();
+                // bootbox.alert(trans['rating_success']);
             }
         }
     });

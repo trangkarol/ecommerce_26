@@ -54,6 +54,18 @@ class LoginController extends Controller
     }
 
     /**
+     * login wwith url.
+     *
+     * @return void
+     */
+    public function loginUrl($urlCallback)
+    {
+        $urlCallback = isset($urlCallback) ? $urlCallback : '';
+
+        return view('member.user.login', compact('urlCallback'));
+    }
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -62,6 +74,10 @@ class LoginController extends Controller
     {
         $result = $this->userRepository->login($request);
         if ($result) {
+            if (!empty($request->urlCallback)) {
+                return redirect(str_replace('-', '/', $request->urlCallback));
+            }
+
             $request->session()->flash('success', trans('user.msg.login-success'));
 
             if (Auth::user()->role == config('setting.role.admin')) {

@@ -76,6 +76,7 @@ Route::group(['prefix' => 'member', 'namespace' => 'Member'], function () {
 /*login user*/
 Route::group(['namespace' => 'Auth'], function() {
     Route::get('/login', 'LoginController@index');
+    Route::get('/login/{urlCallback}', 'LoginController@loginUrl');
     Route::post('/login', 'LoginController@login');
     Route::post('/logout', 'LoginController@logout');
     Route::post('/change-password', 'ResetPasswordController@changePassword');

@@ -167,7 +167,7 @@ class SuggestProductRepository extends BaseRepository implements SuggestProductI
             }
 
             if (!empty($input['name'])) {
-                $products = $products->where('product_name', 'LIKE', '%' . $input['name']);
+                $products = $products->where('product_name', 'LIKE', '%' . $input['name'] . '%');
             }
 
             if ($input['sort_product'] == config('setting.product.hot')) {

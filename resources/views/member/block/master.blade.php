@@ -75,10 +75,10 @@
                     'confirm_order': "{{ trans('common.msg.confirm-order') }}",
                     'confirm_delete_order': "{{ trans('common.msg.confirm-delete-order') }}",
                     'msg_login': "{{ trans('common.msg.not-login') }}",
+                    'rating_success': "{{ trans('common.msg.rating-success') }}",
                 };
 
                 var action = {
-                    'get_login': "{{ action('Auth\LoginController@index') }}",
                     'add_cart': "{{ action('Member\OrderController@addCart') }}",
                     'remove_cart': "{{ action('Member\OrderController@removeCart') }}",
                     'search_product': "{{ action('Member\ProductController@searchProduct') }}",

@@ -45,6 +45,7 @@
                             </div>
                             {!! Form::open(['action' => 'Auth\LoginController@login', 'method' => 'POST', 'class' => 'omb_loginForm']) !!}
 
+                            {{ Form::hidden('urlCallback', isset($urlCallback) ? $urlCallback : '') }}
                             <div class="input-group {{ $errors->has('email') ? ' has-error' : '' }} col-md-6 col-md-offset-3">
                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                 {{ Form::text('email', old('email'), ['id' => 'email', 'required', 'placeholder' => 'someone@gmail.com', 'class' => 'form-control']) }}

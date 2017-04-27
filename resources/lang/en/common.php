@@ -105,6 +105,7 @@ return [
         'not-login' => 'You need login to use this function!',
         'comfirm-status' => 'Do you want to change status of this order?',
         'confirm-rating' => 'Do you want to comment this product?',
+        'rating-success' => 'Rating success!',
     ],
 
     'mail' => [
