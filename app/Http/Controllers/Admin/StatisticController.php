@@ -34,30 +34,19 @@ class StatisticController extends Controller
      */
     public function index()
     {
-        // $statisticCategory = $this->orderDetailRepository->statistiCategory();
         $categories = $this->categoryRepository->getCategoryLibrary(config('setting.mutil-level.one'));
-        // // dd($statisticCategory->toArray());
-        // $category = [];
-
-        // foreach ($statisticCategory as $value) {
-        //     $category[] = [
-        //         'name' => $value->parentNameCategory,
-        //         'y' => $value->totalPrice
-        //     ];
-        // }
-
-        // return view('admin.statistic.index', compact('statisticCategory', 'category', 'categories'));statisticProduct
-
         $statisticCategory = $this->orderDetailRepository->statistiCategory();
         $statisticProduct = $this->orderDetailRepository->statisticProduct();
+        $category = [];
 
-        $totalPriceCategory = $statisticCategory->pluck('totalPrice')->all();
-        $nameCategory = $statisticCategory->pluck('parentNameCategory')->all();
+        foreach ($statisticCategory as $value) {
+            $category[] = [
+                'name' => $value->parentNameCategory,
+                'y' => $value->totalPrice
+            ];
+        }
 
-        $totalPriceProduct = $statisticProduct->pluck('toatalPrice')->all();
-        $nameProduct = $statisticProduct->pluck('name')->all();
-
-        return view('admin.statistic.index', compact('statisticCategory', 'totalPriceCategory', 'nameCategory', 'categories', 'totalPriceProduct', 'nameProduct'));
+        return view('admin.statistic.index', compact('categories', 'category', 'nameCaterory'));
     }
 
     /**

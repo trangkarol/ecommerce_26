@@ -1,4 +1,4 @@
-@extends('member.block.master')
+    @extends('member.block.master')
 <!-- title off page -->
 @section('title')
     {{ trans('common.title-login') }}
@@ -69,6 +69,11 @@
                                 @endif
                                 <div class="clearfix"></div>
                             </div>
+
+                            <div class="input-group col-md-6 col-md-offset-3" >
+                                <a href="{{ action('Auth\ForgotPasswordController@index') }}">{{ trans('user.lbl-forget-password') }}</a>
+                            </div>
+
 
                             <div class="col-md-4 col-md-offset-4">
                                 {{ Form::submit(trans('common.button.login'), ['class' => 'btn btn-success btn-block btn-large']) }}

@@ -41,6 +41,16 @@ class CategoryRepository extends BaseRepository implements CategoryInterface
     }
 
     /**
+    * function getCategory.
+     *
+     * @param $parent_id
+     * @return imageName
+     */
+    public function getCategory()
+    {
+        return $this->model->with('subCategory')->where('type_category', config('setting.mutil-level.one'))->orderBy('created_at', 'desc')->paginate(config('setting.user.paginate'));
+    }
+    /**
     * function get memnu.
      *
      * @param $parent_id
@@ -108,6 +118,69 @@ class CategoryRepository extends BaseRepository implements CategoryInterface
     }
 
     /**
+    * function create.
+     *
+     * @return true or false
+     */
+    public function create($input)
+    {
+        DB::beginTransaction();
+        try {
+            $result = parent::create($input);
+            DB::commit();
+
+            return $result;
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    /**
+    * function create.
+     *
+     * @return true or false
+     */
+    public function update($input, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $category = $this->model->find($id);
+            $input['parent_id'] = $input['parent_id'] ? $request->parent_id : $category->parent_id;
+            $result = parent::update($input, $id);
+            DB::commit();
+
+            return $result;
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    /**
+    * function create.
+     *
+     * @return true or false
+     */
+    public function delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            $category = $this->model->find($id);
+            // $result = parent::delete($input, $id);
+            DB::commit();
+
+            return $result;
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return false;
+        }
+    }
+
+    /**
     * function getCategoryId.
      *
      * @return true or false
@@ -136,7 +209,6 @@ class CategoryRepository extends BaseRepository implements CategoryInterface
 
             return $subCategory->id;
         } catch (\Exception $e) {
-            dd($e);
             return false;
         }
     }

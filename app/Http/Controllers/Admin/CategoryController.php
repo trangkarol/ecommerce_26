@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Category\CategoryInterface;
+use App\Helpers\Library;
+use App\Http\Requests\CategoryRequest;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -27,7 +30,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->categoryRepository->getMenu();
+        $categories = $this->categoryRepository->getCategory();
 
         return view('admin.category.index', compact('categories'));
     }
@@ -39,7 +42,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $parentCategory = $this->categoryRepository->getCategoryLibrary(config('setting.mutil-level.one'));
+        $typeCategory = Library::typeCategory();
+
+        return view('admin.category.create', compact('parentCategory', 'typeCategory'));
     }
 
     /**
@@ -48,9 +54,23 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $input = $request->all();
+        $input['parent_id'] = isset($request->parent_id) ? $request->parent_id : 0;
+        $result = $this->categoryRepository->create($input);
+
+        if ($result) {
+            $request->session()->flash('success', trans('category.msg.insert-success'));
+            DB::rollback();
+
+            return redirect()->action('Admin\CategoryController@edit', $result->id);
+        }
+
+        $request->session()->flash('fail', trans('category.msg.insert-fail'));
+        DB::rollback();
+
+        return redirect()->back();
     }
 
     /**
@@ -72,7 +92,11 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = $this->categoryRepository->find($id);
+        $parentCategory = $this->categoryRepository->getCategoryLibrary(config('setting.mutil-level.one'));
+        $typeCategory = Library::typeCategory();
+
+        return view('admin.category.edit', compact('category', 'parentCategory', 'typeCategory'));
     }
 
     /**
@@ -82,9 +106,21 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $input = $request->all();
+        $input['parent_id'] = isset($request->parent_id) ? $request->parent_id : 0;
+        $result = $this->categoryRepository->update($input, $id);
+
+        if ($result) {
+            $request->session()->flash('success', trans('category.msg.edit-success'));
+
+            return redirect()->action('Admin\CategoryController@edit', $result->id);
+        }
+
+        $request->session()->flash('fail', trans('category.msg.edit-fail'));
+
+        return redirect()->back();
     }
 
     /**
@@ -95,6 +131,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = $this->categoryRepository->delete($id);
+
+        if ($result) {
+            $request->session()->flash('success', trans('category.msg.delete-success'));
+
+            return redirect()->action('Admin\CategoryController@index');
+        }
+
+        $request->session()->flash('fail', trans('category.msg.delete-fail'));
+
+        return redirect()->back();
     }
 }

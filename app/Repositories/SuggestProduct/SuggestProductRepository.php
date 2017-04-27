@@ -35,7 +35,6 @@ class SuggestProductRepository extends BaseRepository implements SuggestProductI
 
             return $result;
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
 
             return false;
@@ -131,7 +130,7 @@ class SuggestProductRepository extends BaseRepository implements SuggestProductI
      */
     public function getSuggestProduct()
     {
-        return $this->model->with('user')->orderBy('is_accept', 'asc')->paginate(config('setting.admin.paginate'));
+        return $this->model->with('user')->orderBy('is_accept', 'asc')->orderBy('created_at', 'desc')->paginate(config('setting.admin.paginate'));
     }
 
     /**
@@ -188,9 +187,8 @@ class SuggestProductRepository extends BaseRepository implements SuggestProductI
                 $products = $products->orderBy('price', 'desc');
             }
 
-            return $products->orderBy('is_accept', 'asc')->paginate(12);
+            return $products->orderBy('created_at', 'desc')->orderBy('is_accept', 'asc')->paginate(config('setting.admin.paginate'));
         } catch (\Exception $e) {
-            dd($e);
             return false;
         }
     }

@@ -32,6 +32,7 @@ return [
     'lbl-phone_number' => 'Phone number',
     'lbl-address' => 'Address',
     'lbl-active-member' => 'Active Member',
+    'lbl-forget-password' => 'Do you forget password?',
     'msg' => [
         'email-required' => 'Please input email!',
         'email-format' => 'Email not accepted!',

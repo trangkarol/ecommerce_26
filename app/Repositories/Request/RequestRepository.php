@@ -35,7 +35,6 @@ class RequestRepository extends BaseRepository implements RequestInterface
 
             return $result;
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
 
             return false;
@@ -94,7 +93,7 @@ class RequestRepository extends BaseRepository implements RequestInterface
      */
     public function getSuggestProduct()
     {
-        return $this->model->with('user')->where('is_accept', config('setting.accept_default'))->paginate(config('setting.admin.paginate'));
+        return $this->model->with('user')->where('is_accept', config('setting.accept_default'))->orderBy('created_at', 'desc')->paginate(config('setting.admin.paginate'));
     }
 
     /**
@@ -104,6 +103,6 @@ class RequestRepository extends BaseRepository implements RequestInterface
      */
     public function getSuggestProductUsers()
     {
-        return $this->model->where('user_id', Auth::user()->id)->paginate(config('setting.admin.paginate'));
+        return $this->model->where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(config('setting.admin.paginate'));
     }
 }

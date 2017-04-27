@@ -93,7 +93,7 @@ class RequestController extends Controller
             if ($requestProduct) {
                 $request->session()->flash('success', trans('product.msg.insert-success'));
 
-                return redirect()->action('Admin\ProductController@update', $requestProduct->id);
+                return redirect()->action('Admin\ProductController@edit', $requestProduct->id);
             }
         } catch (\Exception $e) {
             $request->session()->flash('fail', trans('product.msg.insert-fail'));

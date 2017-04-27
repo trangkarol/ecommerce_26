@@ -128,7 +128,6 @@ class UserRepository extends BaseRepository implements UserInterface
 
             return $result;
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
 
             return false;
@@ -152,7 +151,6 @@ class UserRepository extends BaseRepository implements UserInterface
 
             return parent::update($input, $id);
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
 
             return false;
@@ -177,15 +175,19 @@ class UserRepository extends BaseRepository implements UserInterface
                     'password' => $password,
                 ];
 
-                $this->model->update();
-                Mail::to($user->email)->queue(new ForgotPassword($data));
-                DB::commit();
+                $result = $user->save();
+                if ($result) {
+                    Mail::to($user->email)->queue(new ForgotPassword($data));
+                    DB::commit();
 
-                return true;
+                    return true;
+                }
+
             }
 
             return false;
         } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
 
             return false;
@@ -199,7 +201,7 @@ class UserRepository extends BaseRepository implements UserInterface
      */
     public function getUsers()
     {
-        return $this->model->paginate(config('setting.admin.paginate'));
+        return $this->model->orderBy('created_at', 'desc')->paginate(config('setting.admin.paginate'));
     }
 
     /**
@@ -238,11 +240,11 @@ class UserRepository extends BaseRepository implements UserInterface
             $users = $this->model;
 
             if (!is_null($input['name'])) {
-                $users = $users->where('name', 'LIKE', '%' . $input['name']);
+                $users = $users->where('name', 'LIKE', '%' . $input['name'] . '%');
             }
 
             if (!is_null($input['email'])) {
-                $users = $users->where('email', 'LIKE', '%' . $input['email']);
+                $users = $users->where('email', 'LIKE', '%' . $input['email'] . '%');
             }
 
             if ($input['role'] != config('setting.search_default')) {
@@ -253,9 +255,8 @@ class UserRepository extends BaseRepository implements UserInterface
             //     $users = $users->where('role', $input['role']);
             // }
 
-            return $users->paginate(12);
+            return $users->orderBy('created_at', 'desc')->paginate(config('setting.admin.paginate'));
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
 
             return false;

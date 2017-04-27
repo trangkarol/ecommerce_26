@@ -10,6 +10,12 @@ interface CategoryInterface
 
     public function getMenu();
 
+    public function create($input);
+
+    public function update($input, $id);
+
+    public function delete($id);
+
     public function getProductHome();
 
     public function productCategory();
@@ -17,4 +23,6 @@ interface CategoryInterface
     public function createName($input);
 
     public function getCategoryId($category, $subCategory);
+
+    public function getCategory();
 }

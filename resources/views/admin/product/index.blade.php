@@ -15,7 +15,7 @@
             <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group">
                     <div class="col-md-4">
-                        <a href="{{ action('Admin\ProductController@create') }}" data-toggle="tooltip" data-placement="top" title="{{ trans('product.tooltip.create') }}" class="btn btn-primary"><i class="fa fa-plus " ></i></a>
+                        <a href="{{ action('Admin\ProductController@create') }}" data-toggle="tooltip" data-placement="top" title="{{ trans('product.tooltip.create') }}" class="btn btn-primary"><i class="fa fa-plus" ></i></a>
                     </div>
 
                     <div class="col-md-4">

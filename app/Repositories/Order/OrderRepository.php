@@ -49,7 +49,7 @@ class OrderRepository extends BaseRepository implements OrderInterface
      */
     public function getOrders()
     {
-        return $this->model->with('orderDeatils.product', 'user')->paginate(config('setting.admin.paginate'));
+        return $this->model->with('orderDeatils.product', 'user')->orderBy('status', 'asc')->orderBy('created_at', 'desc')->paginate(config('setting.admin.paginate'));
     }
 
     /**
@@ -102,7 +102,7 @@ class OrderRepository extends BaseRepository implements OrderInterface
                 $orders = $orders->where('status', $input['status']);
             }
 
-            return $orders->paginate(12);
+            return $orders->orderBy('status', 'asc')->orderBy('created_at', 'desc')->paginate(config('setting.admin.paginate'));
         } catch (\Exception $e) {
             return false;
         }

@@ -109,4 +109,18 @@ class Library
             config('setting.product_status.cancel') => trans('common.product_status.cancel'),
         ];
     }
+
+    /**
+    * get type category
+     *
+     * @return category
+     */
+    public static function typeCategory()
+    {
+        return [
+            config('setting.category.choose') => trans('category.lbl-choose'),
+            config('setting.mutil-level.one') => trans('category.lbl-level-one'),
+            config('setting.mutil-level.two') => trans('category.lbl-level-two'),
+        ];
+    }
 }

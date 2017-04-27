@@ -61,7 +61,7 @@ class ProductController extends Controller
     {
         $parentCategory = $this->categoryRepository->getCategoryLibrary(config('setting.mutil-level.one'));
 
-        return view('admin.product.create')->with(['parentCategory' => $parentCategory, 'subCategory' => $subCategory, 'madeIn' => $this->madeIn]);
+        return view('admin.product.create')->with(['parentCategory' => $parentCategory, 'madeIn' => $this->madeIn]);
     }
 
     /**

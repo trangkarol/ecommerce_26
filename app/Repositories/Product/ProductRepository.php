@@ -29,7 +29,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
      */
     public function getProduct()
     {
-        return $this->model->with('category')->paginate(12);
+        return $this->model->with('category')->orderBy('created_at', 'desc')->paginate(12);
     }
 
     /**
@@ -41,12 +41,13 @@ class ProductRepository extends BaseRepository implements ProductInterface
     {
         try {
             $input = $request->only(['name', 'made_in', 'number_current', 'description', 'price', 'date_manufacture', 'date_expiration']);
-            $input['category_id'] = $request->subCategory;
-            $input['image'] = isset($request->file) ? parent::uploadImages(null, $request->file, null) : config('settings.images.product');
+            $input['category_id'] = $request->subCategory_id;
+            $input['image'] = isset($request->file) ? parent::uploadImages(null, $request->file, null) : config('setting.images.product');
             $result = parent::create($input);
 
             return true;
         } catch (\Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -82,7 +83,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
         try {
             $product = parent::find($id, 'image');
             $input = $request->only(['name', 'made_in', 'number_current', 'description', 'date_manufacture', 'date_expiration']);
-            $input['category_id'] = $request->subCategory;
+            $input['category_id'] = $request->subCategory_id;
 
             if (isset($request->file)) {
                 $input['image'] = parent::uploadImages($product->image, $request->file, config('setting.images.product'));
@@ -279,7 +280,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
                 $products = $products->orderBy('price', 'desc');
             }
 
-            return $products->paginate(12);
+            return $products->orderBy('created_at', 'desc')->paginate(12);
         } catch (\Exception $e) {
             return false;
         }

@@ -11,3 +11,7 @@
 td.div-description {
     max-width: 400px;
 }
+
+.form-group.div-parent-category {
+    display: none;
+}

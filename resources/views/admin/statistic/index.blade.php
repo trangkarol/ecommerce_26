@@ -42,8 +42,8 @@
                            </div>
                             <div class="x_content">
                                 <h2>Static category of website</h2>
-                                <div class="col-md-3 col-md-offset-4">
-                                    <canvas id="chart-statistic" width="200" height="300"></canvas>
+                                <div class="col-md-6 col-md-offset-3">
+                                    <div id="chart-statistic" style="height: 400px"></div>
                                 </div>
                             </div>
                         </div>
@@ -68,8 +68,8 @@
                                 <div class="clearfix"></div>
                            </div>
                             <div class="x_content">
-                                <div class="col-md-3 col-md-offset-5">
-                                    <canvas id="statistic-product" width="200" height="300"></canvas>
+                                <div class="col-md-12">
+                                    <div id="statistic-product" style="height: 400px"></div>
                                 </div>
                             </div>
                         </div>
@@ -84,10 +84,7 @@
     {{ Html::script('/admin/js/statistic.js') }}
     <script type="text/javascript">
         var data = {
-            'nameCategory': {!! json_encode($nameCategory) !!},
-            'totalPriceCategory': {!! json_encode($totalPriceCategory) !!},
-            'totalPriceProduct': {!! json_encode($totalPriceProduct) !!},
-            'nameProduct': {!! json_encode($nameProduct) !!},
+            'category': {!! json_encode($category) !!},
         };
     </script>
 @endsection
