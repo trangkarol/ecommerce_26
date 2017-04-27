@@ -27,9 +27,9 @@ class SuggestProductRequest extends FormRequest
         switch ($this->method()) {
             case 'PUT':
             case 'PATCH':
-                $name = 'required|max:50|min:4|unique:products,name,' . $this->id;
+                $name = 'required|max:50|min:4|unique:suggest_products,name,' . $this->id;
             case 'POST':
-                $name = 'required|max:50|min:4|unique:products';
+                $name = 'required|max:50|min:4|unique:suggest_products';
         }
 
         return [

@@ -1,10 +1,10 @@
-<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+<div class="form-group {{ $errors->has('product_name') ? 'has-error' : '' }}">
     {{ Form::label('product_name', trans('product.lbl-name'), ['class' => 'col-md-4 control-label']) }}
     <div class="col-md-8">
-        {{ Form::text('name', isset($productSuggest->product_name) ? $productSuggest->product_name : old('name'), ['class' => 'form-control', 'id' => 'product_name', 'required' => true, 'autofocus' => true]) }}
-        @if ($errors->has('name'))
+        {{ Form::text('product_name', isset($productSuggest->product_name) ? $productSuggest->product_name : old('name'), ['class' => 'form-control', 'id' => 'product_name', 'required' => true, 'autofocus' => true]) }}
+        @if ($errors->has('product_name'))
             <span class="help-block">
-                <strong>{{ $errors->first('name') }}</strong>
+                <strong>{{ $errors->first('product_name') }}</strong>
             </span>
         @endif
     </div>

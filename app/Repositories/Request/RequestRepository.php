@@ -35,6 +35,7 @@ class RequestRepository extends BaseRepository implements RequestInterface
 
             return $result;
         } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
 
             return false;

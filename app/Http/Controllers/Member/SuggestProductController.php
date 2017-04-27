@@ -62,8 +62,8 @@ class SuggestProductController extends Controller
      */
     public function store(SuggestProductRequest $request)
     {
-        $input = $request->only(['product_name', 'made_in', 'number_current', 'description', 'price', 'category_id', 'category_name', 'sub_category_id', 'sub_category_name', 'date_manufacture', 'date_expiration']);
-        $input['images'] = isset($request->file) ? $this->suggestProductRepository->uploadImages(null, $request->file, null) : config('settings.images.product');
+        $input = $request->all();
+        $input['images'] = isset($request->file) ? $this->suggestProductRepository->uploadImages(null, $request->file, null) : config('setting.images.product');
         $input['is_accept'] = config('setting.accept_default');
         $input['user_id'] = Auth::user()->id;
         $result = $this->suggestProductRepository->create($input);
@@ -116,7 +116,7 @@ class SuggestProductController extends Controller
      */
     public function update(SuggestProductRequest $request, $id)
     {
-        $input = $request->only(['product_name', 'made_in', 'number_current', 'description', 'price', 'category_id', 'category_name', 'sub_category_id', 'sub_category_name']);
+        $input = $request->all();
         $input['is_accept'] = config('setting.accept_default');
         $input['user_id'] = Auth::user()->id;
         $result = $this->suggestProductRepository->updateSuggestProduct($input, $request->file, $id);
