@@ -33,6 +33,16 @@ class ProductRepository extends BaseRepository implements ProductInterface
     }
 
     /**
+    * function getDetailProduct($productId).
+     *
+     * @return imageName
+     */
+    public function getDetailProduct($productId)
+    {
+        return $this->model->with('category', 'user', 'comments.subComment')->where('product_id', $productId)->first();
+    }
+
+    /**
     * function create.
      *
      * @return true or false
@@ -47,7 +57,6 @@ class ProductRepository extends BaseRepository implements ProductInterface
 
             return true;
         } catch (\Exception $e) {
-            dd($e);
             return false;
         }
     }
@@ -82,7 +91,7 @@ class ProductRepository extends BaseRepository implements ProductInterface
         DB::beginTransaction();
         try {
             $product = parent::find($id, 'image');
-            $input = $request->only(['name', 'made_in', 'number_current', 'description', 'date_manufacture', 'date_expiration']);
+            $input = $request->except('file');
             $input['category_id'] = $request->subCategory_id;
 
             if (isset($request->file)) {
