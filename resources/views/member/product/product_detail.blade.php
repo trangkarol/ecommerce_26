@@ -20,7 +20,7 @@
                         <div class="col-md-12 single-grid">
                             <div clas="single-top">
                                 <div class="single-left">
-                                    {{ Form::hidden('productId', $product->id,['class' => 'btn btn-success btn-agree', 'id' => 'productId', 'type' => 'button']) }}
+                                    {{ Form::hidden('productId', $product->id,['id' => 'productId']) }}
                                     <div class="flexslider">
                                         <div class="thumb-image"> <img src="{{ $product->path_image }}" data-imagezoom="true" class="img-responsive"> </div>
                                     </div>
@@ -68,6 +68,7 @@
         var trans = {
             'confirm_rating': "{{ trans('common.msg.confirm-rating') }}",
             'msg_login': "{{ trans('common.msg.not-login') }}",
+            'msg_comfirm_post': "{{ trans('common.msg.comfirm-post') }}",
         };
     </script>
 @endsection

@@ -19,14 +19,19 @@ $(document).ready(function () {
         getFormLogin();
     });
 
-    $(function () {
-        $("#slider").responsiveSlides({
-            auto: true,
-            nav: true,
-            speed: 500,
-            namespace: "callbacks",
-            pager: true,
-        });
+    $(document).on('click', '.reply-comment', function () {
+        $('li.current').removeClass('current');
+        console.log($(this).parents('li'));
+        $(this).parents('li.parent-comment').addClass('current');
+        getCommentBox();
+    });
+
+    $("#slider").responsiveSlides({
+        auto: true,
+        nav: true,
+        speed: 500,
+        namespace: "callbacks",
+        pager: true,
     });
 
     $(document).on('click', '.drop-down-menu', function () {
@@ -36,11 +41,11 @@ $(document).ready(function () {
     });
 
     // change category one
-    $(document).on('change', '#category',function() {
+    $(document).on('change', '#category',function () {
         getSubCategory();
     });
 
-    $(document).on('click', '#order', function () {
+    $(document).on('click', '#order', function (event) {
         event.preventDefault();
         bootbox.confirm(trans['confirm_order'], function(result) {
             if(result) {
@@ -49,7 +54,7 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('change', '.point', function () {
+    $(document).on('change', '.point', function (event) {
         event.preventDefault();
         bootbox.confirm(trans['confirm_rating'], function(result) {
             if(result) {
@@ -58,7 +63,7 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('change', '.message-login', function () {
+    $(document).on('change', '.message-login', function (event) {
         event.preventDefault();
         bootbox.alert(trans['msg_login'], function () {
             urlCall = window.location.pathname.replace(/\//g, '-');
@@ -66,12 +71,29 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on('click', '#message', function () {
+    $(document).on('click', '#message', function (event) {
         event.preventDefault();
         bootbox.alert(trans['msg_login'], function () {
             urlCall = window.location.pathname.replace(/\//g, '-');
             window.location.href = '/login/' + urlCall;
         });
+    });
+
+    $(document).on('click', '.post-comment', function (event) {
+        console.log('ddfd');
+        event.preventDefault();
+        $('li.wirte-comment').removeClass('current');
+        $(this).parents('li.wirte-comment').addClass('current');
+        bootbox.confirm(trans['msg_comfirm_post'], function ($result) {
+           if ($result) {
+                comment();
+           }
+        });
+    });
+
+    $(document).on('click', '.close-box', function () {
+        $(this).parents('li.sub-comment').addClass('current');
+        $('li.sub-comment.current').remove();
     });
 
     //handel pagination by ajax
@@ -313,5 +335,46 @@ function getSubCategory() {
                 $('#sub-category').html(data.html);
             }
         }
+    });
+}
+
+function getCommentBox() {
+    var parentId = $('li.parent-comment.current').find('input:hidden[name=parent_id]').val();
+
+    $.ajax({
+        type: 'POST',
+        url: action['get_comment_box'],
+        dataType: 'json',
+        data: {
+           parentId: parentId,
+        },
+        success:function(data) {
+            if (data.result) {
+                $('li.parent-comment.current').find('.reply-list').append(data.html);
+            }
+        }
+    });
+}
+
+function comment() {
+    var content = $('li.wirte-comment.current').find('.content-comment').val();
+    var parentId = $('li.wirte-comment.current').find('input:hidden[name=parent_id]').val();
+    var productId = $('#productId').val();
+
+    $.ajax({
+        type: 'POST',
+        url: action['post_comment'],
+        dataType: 'json',
+        data: {
+            content: content,
+            product_id: productId,
+            parent_id: parentId,
+        },
+        success:function (data) {
+            if (data.result) {
+                $('#comment').empty();
+                $('#comment').html(data.html);
+            }
+        },
     });
 }

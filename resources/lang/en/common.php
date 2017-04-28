@@ -106,6 +106,7 @@ return [
         'comfirm-status' => 'Do you want to change status of this order?',
         'confirm-rating' => 'Do you want to comment this product?',
         'rating-success' => 'Rating success!',
+        'comfirm-post' => 'Do you want to post this comment?',
     ],
 
     'mail' => [

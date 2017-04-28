@@ -59,10 +59,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = $this->productRepository->findProduct($id);
+        $product = $this->productRepository->getDetailProduct($id);
         $relatedProducts = $this->productRepository->relatedProduct($product->category_id, $product->id);
-        $comment = $this->commentRepository->getComment($id);
-        dd($comment->toArray());
         //handel viewed products
         $viewedProduct = [
             'productId' => $id,

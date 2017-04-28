@@ -84,6 +84,8 @@
                     'search_product': "{{ action('Member\ProductController@searchProduct') }}",
                     'product_sub_category': "{{ action('Member\SuggestProductController@getCategory') }}",
                     'rating_product': "{{ action('Member\RatingController@addRating') }}",
+                    'get_comment_box': "{{ action('Member\CommentController@getCommentBox') }}",
+                    'post_comment': "{{ action('Member\CommentController@postComment') }}",
                 };
 
             </script>
