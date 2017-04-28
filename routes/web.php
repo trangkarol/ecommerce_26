@@ -71,6 +71,11 @@ Route::group(['prefix' => 'member', 'namespace' => 'Member'], function () {
     Route::get('/category/{categoryId}', 'ProductController@getProductCategory');
     Route::post('/search-product', 'ProductController@searchProduct');
     Route::post('/add-rating', 'RatingController@addRating');
+
+    Route::group(['prefix' => 'comment'], function () {
+        Route::post('/comment-box', 'CommentController@getCommentBox');
+        Route::post('/add-comment', 'CommentController@postComment');
+    });
 });
 
 /*login user*/

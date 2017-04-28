@@ -27,6 +27,26 @@ class CommentRepository extends BaseRepository implements CommentInterface
      */
     public function getComment($productId)
     {
-        return $this->model->with('product', 'user')->where('product_id', $productId)->orderBy('created_at', 'desc')->get();
+        return $this->model->with('product', 'user', 'sub')->where('product_id', $productId)->orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+    * function create.
+     *
+     * @return imageName
+     */
+    public function create($inputs)
+    {
+        DB::beginTransaction();
+        try {
+            $result = parent::create($inputs);
+            DB::commit();
+
+            return $result;
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return false;
+        }
     }
 }

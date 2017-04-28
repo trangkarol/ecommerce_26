@@ -3808,3 +3808,7 @@ body {
         width: 320px;
     }
 }
+
+textarea.form-control.content-comment {
+    height: 100px;
+}
