@@ -21,7 +21,6 @@ $(document).ready(function () {
 
     $(document).on('click', '.reply-comment', function () {
         $('li.current').removeClass('current');
-        console.log($(this).parents('li'));
         $(this).parents('li.parent-comment').addClass('current');
         getCommentBox();
     });
@@ -56,7 +55,7 @@ $(document).ready(function () {
 
     $(document).on('change', '.point', function (event) {
         event.preventDefault();
-        bootbox.confirm(trans['confirm_rating'], function(result) {
+        bootbox.confirm(trans['confirm_rating'], function (result) {
             if(result) {
                 rating();
             }
@@ -144,6 +143,7 @@ function cart() {
 
     $('.btn-number').click(function (e){
         e.preventDefault();
+        $('.add-cart-number').removeClass('current');
         $(this).parents('.add-cart-number').addClass('current');
         fieldName = $(this).attr('data-field');
         type      = $(this).attr('data-type');
@@ -175,28 +175,30 @@ function cart() {
         }
     });
 
-    $('.add-cart-number.current').find('.input-number').focusin(function (){
+    $('.add-cart-number.current').find('.input-number').focusin(function ()             {
        $(this).data('oldValue', $(this).val());
     });
 
-    $('.add-cart-number.current').find('.input-number').change(function () {
-        console.log('sdsdsdsds');
-        minValue =  parseInt($(this).attr('min'));
-        maxValue =  parseInt($(this).attr('max'));
-        valueCurrent = parseInt($(this).val());
+    $('.input-number').change(function () {
+        console.log('dfdfdfdf');
+        // minValue = parseInt($(this).attr('min'));
+        // console.log(minValue);
+        // maxValue = parseInt($(this).attr('max'));
+        // valueCurrent = parseInt($(this).val());
 
-        name = $(this).attr('name');
-        if(valueCurrent >= minValue) {
-            $('.add-cart-number.current').find(".btn-number[data-type='minus'][data-field='"+name+"']").prop('disabled', false);
-        } else {
-            alert('Sorry, the minimum value was reached');
-            $(this).val($(this).data('oldValue'));
-        }
-        if(valueCurrent <= maxValue) {
-            $('.add-cart-number.current').find(".btn-number[data-type='plus'][data-field='"+name+"']").prop ('disabled', false);
-            alert('Sorry, the maximum value was reached');
-            $(this).val($(this).data('oldValue'));
-        }
+        // name = $(this).attr('name');
+        // if(valueCurrent >= minValue) {
+        //     $('.add-cart-number.current').find(".btn-number[data-type='minus'][data-field='"+name+"']").prop('disabled', false);
+        // } else {
+        //     alert('Sorry, the minimum value was reached');
+        //     $(this).val($(this).data('oldValue'));
+        // }
+
+        // if(valueCurrent <= maxValue) {
+        //     $('.add-cart-number.current').find(".btn-number[data-type='plus'][data-field='"+name+"']").prop ('disabled', false);
+        //     alert('Sorry, the maximum value was reached');
+        //     $(this).val($(this).data('oldValue'));
+        // }
     });
 
     $(".input-number").keydown(function (e) {
@@ -240,7 +242,7 @@ function addCart() {
             productId: productId,
             number: number,
         },
-        success:function(data) {
+        success:function (data) {
             if (data.result) {
                 $('#div-your-cart').empty();
                 $('#div-your-cart').html(data.html);
@@ -259,8 +261,7 @@ function removeCart() {
         data: {
             productId: productId,
         },
-        success:function(data) {
-            console.log(data);
+        success:function (data) {
             if (data.result) {
                 $('#div-your-cart').empty();
                 $('#div-your-cart').html(data.html);
@@ -282,13 +283,15 @@ function search(page) {
         url: url,
         dataType: 'json',
         data: data,
-        success:function(data) {
+        success:function (data) {
             $('#div-result-product').empty();
             $('#div-result-product').html(data.html);
             $('.pagination').addClass('search');
+
             if (page) {
                 location.hash='?page='+page;
             }
+
             $('.rating').rating();
 
             cart();

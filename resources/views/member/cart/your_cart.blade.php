@@ -1,4 +1,4 @@
-<li class="cart box_1 {{ Session::has('yourCart') ? 'show-cart-detail' :  '' }}" id="div-your-cart">
+<li class="cart box_1 {{ Session::has('yourCart') ? 'show-cart-detail' : '' }}" id="div-your-cart">
     <a href="{{ action('Member\OrderController@index') }}" class="lbl-cart">
         <h3> <div class="total">
             <span class="">{{ Session::has('yourCart') ? number_format($productCats->sum('total_price'), 3, ',', ',') . ' ' . trans('common.lbl-vnd') : 0 }}</span> (<span id="" class="">{{ Session::has('yourCart') ? $productCats->sum('number_order') : 0 }}</span> items)</div>
