@@ -3476,7 +3476,7 @@ img.img-responsive.img-product {
     height: 227px;
 }
 .cnt-main.div-search {
-    height: 293px !important;
+    /* height: 293px !important; */
 }
 
 input.number-product.form-group.col-md-3 {
@@ -3507,7 +3507,7 @@ span.stars span {
 }
 
 span.star {
-    font-size: 60%;
+    font-size: 0.3em;
 }
 
 .rating-stars {

@@ -40,6 +40,7 @@ class UserRepository extends BaseRepository implements UserInterface
 
             return false;
         } catch (\Exception $e) {
+            dd($e);
             return false;
         }
     }
@@ -146,7 +147,10 @@ class UserRepository extends BaseRepository implements UserInterface
             $user = $this->model->find($id);
             $input = $request->only(['name', 'email', 'address', 'phone_number']);
             $input['avatar'] = isset($request->file) ? parent::uploadImages($user->avatar, $request->file, config('setting.images.avatar')) : $user->avatar;
-            $input['password'] = isset($request->password) ? $request->password : $user->password;
+            if (!empty($request->password)) {
+                $input['password'] = $request->password;
+            }
+
             DB::commit();
 
             return parent::update($input, $id);

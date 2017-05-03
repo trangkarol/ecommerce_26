@@ -137,17 +137,14 @@ class OrderController extends Controller
      * @param  int  $categoryId
      * @return \Illuminate\Http\Response
      */
-    public function changeStatus($id, $status, Request $request)
+    public function changeStatus(Request $request)
     {
         try {
-            $status = $this->orderRepository->changeStatus($id, $status);
-            $request->session()->flash('success', trans('order.msg.change-status-success'));
+            $status = $this->orderRepository->changeStatus($request->orderId, $request->status);
 
-            return redirect()->back();
+            return response()->json(['result' => true, 'status' => $status]);
         } catch (Exception $e) {
-            $request->session()->flash('fail', trans('order.msg.change-status-fail'));
-
-            return redirect()->back();
+            return response()->json('result', false);
         }
     }
 }

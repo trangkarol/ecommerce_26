@@ -54,11 +54,13 @@
     <script type="text/javascript">
         var action = {
             'request_search': "{{ action('Admin\RequestController@search') }}",
+            'cancel': "{{ action('Admin\RequestController@cancel') }}",
         };
 
         var trans = {
             'msg_comfirm_accpet': "{{ trans('common.msg.confirm-accept') }}",
             'msg_comfirm_cancel': "{{ trans('common.msg.confirm-cancel') }}",
+            'status_cancel': "{{ trans('common.product_status.cancel') }}",
         };
     </script>
 @endsection

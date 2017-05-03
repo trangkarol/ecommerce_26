@@ -89,12 +89,9 @@ class RequestController extends Controller
             $product = $this->dataProduct($productSuggest);
             $this->suggestProductRepository->changeAccept($suggestId, config('setting.accept'));
             $requestProduct = $this->productRepository->saveRequestProduct($product);
+            $request->session()->flash('success', trans('product.msg.insert-success'));
 
-            if ($requestProduct) {
-                $request->session()->flash('success', trans('product.msg.insert-success'));
-
-                return redirect()->action('Admin\ProductController@edit', $requestProduct->id);
-            }
+            return redirect()->action('Admin\ProductController@edit', $requestProduct->id);
         } catch (\Exception $e) {
             $request->session()->flash('fail', trans('product.msg.insert-fail'));
 
@@ -136,16 +133,7 @@ class RequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $result = $this->suggestProductRepository->changeAccept($id, config('setting.cancel'));
-            $request->session()->flash('success', trans('product.msg.cancel-success'));
-
-            return redirect()->action('Admin\RequestController@index');
-        } catch (\Exception $e) {
-            $request->session()->flash('fail', trans('product.msg.cancel-fail'));
-
-            return redirect()->action('Admin\RequestController@index');
-        }
+        //
     }
 
     /**
@@ -195,6 +183,24 @@ class RequestController extends Controller
 
             return response()->json(['result' => true, 'html' => $html]);
         } catch (Exception $e) {
+            return response()->json('result', false);
+        }
+    }
+
+    /**
+     * cancel a request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Request $request)
+    {
+        try {
+            $status = $this->suggestProductRepository->changeAccept($request->suggestId, config('setting.cancel'));
+
+            return response()->json(['result' => true, 'status' => $status]);
+        } catch (\Exception $e) {
             return response()->json('result', false);
         }
     }

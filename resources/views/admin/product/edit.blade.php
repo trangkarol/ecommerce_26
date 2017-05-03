@@ -1,7 +1,7 @@
 @extends('admin.block.master')
 <!-- title off page -->
 @section('title')
-    {{ trans('product.title-update') }}
+    {{ trans('product.title-edit') }}
 @endsection
 <!-- css used for page -->
 <!-- content of page -->

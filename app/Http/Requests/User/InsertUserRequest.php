@@ -27,18 +27,22 @@ class InsertUserRequest extends FormRequest
         switch ($this->method()) {
             case 'PUT':
             case 'PATCH':
-                $email = 'required|email|unique:users,email,' . $this->id;
+                return [
+                    'name' => 'required|max:255',
+                    'email' => 'required|email|unique:users,email,' . $this->id,
+                    'birthday' => 'required',
+                    'address' => 'max:255|min:6',
+                    'phone_number' => 'max:12|min:12',
+                ];
             case 'POST':
-                $email = 'required|email|unique:users';
+                return [
+                    'name' => 'required|max:255',
+                    'email' => 'required|email|unique:users',
+                    'birthday' => 'required',
+                    'address' => 'max:255|min:6',
+                    'phone_number' => 'max:12|min:12',
+                ];
         }
-
-        return [
-            'name' => 'required|max:255',
-            'email' => $email,
-            'birthday' => 'required',
-            'address' => 'max:255|min:6',
-            'phone_number' => 'max:12|min:12',
-        ];
     }
 
     /**

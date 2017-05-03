@@ -2,7 +2,7 @@
     <h2 class="tittle">{{ trans('member.title-hot-product') }}</h2>
     <div class="arrivals-grids">
         @foreach ($product_hots as $product)
-            <div class="col-md-3 arrival-grid simpleCart_shelfItem">
+            <div class="col-md-4 arrival-grid simpleCart_shelfItem">
                 <div class="grid-arr">
                     <div  class="grid-arrival">
                         <figure>

@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>{{ trans('common.lbl-stt') }}</th>
@@ -19,8 +19,8 @@
                     <td>{{ $order->date_format }}</a></td>
                     <td>{{ $order->number }}</a></td>
                     <td>{{ $order->total_price_format }}</td>
-                    <th>{{ $order->user->name }}</th>
-                    <th>{{ $order->name_status }}</th>
+                    <td>{{ $order->user->name }}</td>
+                    <td class="status">{{ $order->name_status }}</td>
                     <td>
                         @if (!$order->orderDeatils->isEmpty())
                             <table class="table table-bordered table-striped">
@@ -48,12 +48,16 @@
                     <td>
                         @if ($order->status == config('setting.order_status.unpaid'))
                             <div class="col-md-6">
-                                {{ Form::open(['action' => ['Admin\OrderController@changeStatus', $order->id, config('setting.order_status.paid')], 'method' => 'GET', 'class' => 'form-status-paid']) }}
+                                {{ Form::open(['action' => 'Admin\OrderController@changeStatus', 'method' => 'POST', 'class' => 'form-status-paid']) }}
+                                    {!! Form::hidden('orderId', $order->id) !!}
+                                    {!! Form::hidden('status', config('setting.order_status.paid')) !!}
                                     {!! Form::button(trans('common.button.paid'), ['class' => 'btn btn-success btn-status-paid', 'type' => 'button']) !!}
                                 {{ Form::close() }}
                             </div>
                             <div class="col-md-6">
-                                {{ Form::open(['action' => ['Admin\OrderController@changeStatus', $order->id, config('setting.order_status.cancel')], 'method' => 'GET', 'class' => 'form-status-cancel']) }}
+                                {{ Form::open(['action' => 'Admin\OrderController@changeStatus', 'method' => 'POST', 'class' => 'form-status-cancel']) }}
+                                    {!! Form::hidden('orderId', $order->id) !!}
+                                    {!! Form::hidden('status', config('setting.order_status.cancel')) !!}
                                     {!! Form::button(trans('common.button.cancel'), ['class' => 'btn btn-danger btn-status-cancel', 'type' => 'button']) !!}
                                 {{ Form::close() }}
                             </div>

@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<div class="form-group @if (isset($category)) ? {{ $category->type_category == 0 ? 'div-parent-category' : '' }} @endif ">
+<div class="form-group @if (isset($category)) {{ $category->type_category == 0 ? 'div-parent-category' : '' }} @endif ">
     {{ Form::label('category', trans('category.lbl-category'), ['class' => 'col-md-4 control-label']) }}
     <div class="col-md-6">
         {{ Form::select('category', $parentCategory, isset($product->category->parent_id) ? $product->category->parent_id : old('category'), ['class' => 'form-control', 'id' => 'category']) }}

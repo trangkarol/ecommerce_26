@@ -11,6 +11,7 @@
 @section('content')
     <div class="login">
         <div class="main-agileits">
+            @include('admin.block.messages')
             <div class="form-w3agile form1">
                 <h3>{{ trans('member.title-forgot-password') }}</h3>
                  {!! Form::open(['action' => 'Auth\ForgotPasswordController@forgotPassword', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}

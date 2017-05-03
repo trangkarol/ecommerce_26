@@ -15,7 +15,7 @@
             <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group">
                     <div class="col-md-4">
-                       <a href="{{ action('Admin\ProductController@index') }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{ trans('tooltip.list') }}" ><i class="fa fa-list " ></i></a>
+                        <a href="{{ action('Admin\CategoryController@index') }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{ trans('category.tooltip.list') }}" ><i class="fa fa-list " ></i></a>
                     </div>
                 </div>
             </div>

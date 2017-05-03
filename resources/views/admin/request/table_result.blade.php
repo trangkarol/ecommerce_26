@@ -23,7 +23,7 @@
                     <td>{{ $product->price_format }}</td>
                     <td class="div-description">{{ $product->description }}</td>
                     <td>{{ $product->user->name }}</td>
-                    <td>{{ $product->status }}</td>
+                    <td class="status">{{ $product->status }}</td>
                     <td>
                         @if (!$product->is_accept)
                             <div class="col-md-6">
@@ -33,7 +33,8 @@
                                 {{ Form::close() }}
                             </div>
                             <div class="col-md-6">
-                                {!! Form::open(['action' => ['Admin\RequestController@update', $product->id], 'method' => 'PUT', 'class' => 'form-cancel']) !!}
+                                {!! Form::open(['action' => 'Admin\RequestController@cancel', 'method' => 'POST', 'class' => 'form-cancel']) !!}
+                                    {{ Form::hidden('suggestId', $product->id) }}
                                     {!! Form::button(trans('common.button.cancel'), ['class' => 'btn btn-danger btn-cancel', 'type' => 'button']) !!}
                                 {{ Form::close() }}
                             </div>

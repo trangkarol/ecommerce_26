@@ -37,6 +37,7 @@
         </div>
         <!-- end title -->
         <div class="clearfix"></div>
+        @include('admin.block.messages')
         <!-- form search -->
         <div class="row">
         @include('admin.user.search')

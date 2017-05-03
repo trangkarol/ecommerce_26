@@ -22,6 +22,7 @@
         </div>
         <!-- end title -->
         <div class="clearfix"></div>
+        @include('admin.block.messages')
         <!-- form search -->
         <div class="row">
             <div class="x_content">
@@ -36,8 +37,8 @@
                                     </ul>
                                 <div class="clearfix"></div>
                             </div>
-                            {!! Form::open(['action' => ['Admin\UserController@update', $user->id], 'method' => 'PUT', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
-                                {{ Form::hidden('userId', $user->id, ['id' => 'userId']) }}
+                            {!! Form::open(['action' => ['Admin\UserController@update', $user->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
+                                {{ Form::hidden('id', $user->id, ['id' => 'userId']) }}
                                 @include('admin.user.form_user')
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-7">

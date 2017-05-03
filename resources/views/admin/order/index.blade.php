@@ -60,10 +60,14 @@
     <script type="text/javascript">
     var trans = {
         'msg_comfirm_status': "{{ trans('common.msg.comfirm-status') }}",
+        'msg_comfirm_delete': "{{ trans('common.msg.comfirm-delete') }}",
+        'status_paid': "{{ trans('order.lbl-paid') }}",
+        'status_cancel': "{{ trans('order.lbl-cancel') }}",
     };
     trans['']
         var action = {
             'order_search': "{{ action('Admin\OrderController@search') }}",
+            'change_status': "{{ action('Admin\OrderController@changeStatus') }}",
         };
     </script>
 @endsection

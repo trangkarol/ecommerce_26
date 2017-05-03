@@ -73,6 +73,7 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         $result = $this->userRepository->login($request);
+        // dd($result);
         if ($result) {
             if (!empty($request->urlCallback)) {
                 return redirect(str_replace('-', '/', $request->urlCallback));
@@ -81,7 +82,7 @@ class LoginController extends Controller
             $request->session()->flash('success', trans('user.msg.login-success'));
 
             if (Auth::user()->role == config('setting.role.admin')) {
-                return redirect()->action('Admin\ProductController@index');
+                return redirect()->action('Admin\StatisticController@index');
             }
 
             return redirect()->action('Member\HomeController@index');

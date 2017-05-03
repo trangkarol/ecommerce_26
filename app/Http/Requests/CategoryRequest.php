@@ -23,18 +23,19 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
+        // dd($this->id);
         $name = null;
         switch ($this->method()) {
             case 'PUT':
             case 'PATCH':
-                $name = 'required|max:50|min:4|unique:categories,name,' . $this->id;
+                return [
+                    'name' => 'required|max:50|min:4|unique:categories,name,' . $this->id,
+                ];
             case 'POST':
-                $name = 'required|max:50|min:4|unique:categories';
+                return [
+                    'name' => 'required|max:50|min:4|unique:categories',
+                ];
         }
-
-        return [
-            'name' => $name,
-        ];
     }
 
     /**

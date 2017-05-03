@@ -111,11 +111,11 @@ class CategoryController extends Controller
         $input = $request->all();
         $input['parent_id'] = isset($request->parent_id) ? $request->parent_id : 0;
         $result = $this->categoryRepository->update($input, $id);
-
+        // dd($result);
         if ($result) {
             $request->session()->flash('success', trans('category.msg.edit-success'));
 
-            return redirect()->action('Admin\CategoryController@edit', $result->id);
+            return redirect()->action('Admin\CategoryController@edit', $request->id);
         }
 
         $request->session()->flash('fail', trans('category.msg.edit-fail'));

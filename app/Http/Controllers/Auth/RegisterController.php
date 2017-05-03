@@ -9,7 +9,7 @@ use App\Repositories\User\UserInterface;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\User\InsertUserRequest;
 use App\Repositories\Category\CategoryInterface;
-use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Requests\User\RegisterRequest;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -101,15 +101,16 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    public function update(Request $request, $id)
+    public function update(RegisterRequest $request, $id)
     {
-        DB::beginTransaction();
-        $result = $this->userRepository->update($request, $id);
+        $result = $this->userRepository->updateProfile($request, $id, config('setting.role.user'));
         if ($result) {
-            DB::commit();
+            $request->session()->flash('success', trans('user.msg.update-success'));
+
+            return redirect()->action('Auth\RegisterController@getUpdate', $id);
         }
 
-        DB::rollback();
+        $request->session()->flash('fail', trans('user.msg.update-fail'));
 
         return redirect()->action('Auth\RegisterController@getUpdate', $id);
     }

@@ -100,7 +100,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(InsertUserRequest $request, $id)
     {
         $result = $this->userRepository->updateProfile($request, $id, $request->role);
 
@@ -112,7 +112,7 @@ class UserController extends Controller
 
         $request->session()->flash('fail', trans('user.msg.update-fail'));
 
-        return redirect()->back();
+        return redirect()->action('Admin\UserController@edit', $id);
     }
 
     /**

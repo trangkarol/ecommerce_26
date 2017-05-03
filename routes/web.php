@@ -45,7 +45,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 'Admi
 
     Route::group(['prefix' => 'order'], function () {
         Route::post('/search', 'OrderController@search');
-        Route::get('/change-status/{id}/{status}', 'OrderController@changeStatus');
+        Route::post('/change-status', 'OrderController@changeStatus');
     });
 
     Route::group(['prefix' => 'category'], function () {
@@ -54,6 +54,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 'Admi
 
     Route::group(['prefix' => 'request'], function () {
         Route::post('/request', 'RequestController@search');
+        Route::post('/cancel', 'RequestController@cancel');
     });
 });
 
@@ -79,7 +80,7 @@ Route::group(['prefix' => 'member', 'namespace' => 'Member'], function () {
 });
 
 /*login user*/
-Route::group(['namespace' => 'Auth'], function() {
+Route::group(['namespace' => 'Auth'], function () {
     Route::get('/login', 'LoginController@index');
     Route::get('/login/{urlCallback}', 'LoginController@loginUrl');
     Route::post('/login', 'LoginController@login');

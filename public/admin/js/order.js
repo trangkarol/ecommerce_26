@@ -8,7 +8,7 @@ $(document).ready(function() {
     $(document).on('click', '.btn-delete', function(event) {
         $(this).parents('.delete-form-user').addClass('current');
         event.preventDefault();
-        bootbox.confirm('Are you want to delete?', function(result) {
+        bootbox.confirm(trans['msg_comfirm_delete'], function(result) {
             if (result) {
                 $('.delete-form-user.current').submit();
             }
@@ -21,7 +21,8 @@ $(document).ready(function() {
         event.preventDefault();
         bootbox.confirm(trans['msg_comfirm_status'], function(result) {
             if (result) {
-                $('.form-status-paid.current').submit();
+                var data = $('.form-status-paid.current').serialize();
+                changeStatus(data, $('.form-status-paid.current'), trans['status_paid']);
             }
         });
     });
@@ -32,7 +33,8 @@ $(document).ready(function() {
         event.preventDefault();
         bootbox.confirm(trans['msg_comfirm_status'], function(result) {
             if (result) {
-                $('.form-status-cancel.current').submit();
+                var data = $('.form-status-cancel.current').serialize();
+                changeStatus(data, $('.form-status-cancel.current'), trans['status_cancel']);
             }
         });
     });
@@ -68,6 +70,21 @@ function search(page) {
                 if (page){
                     location.hash='?page='+page;
                 }
+            }
+        }
+    });
+}
+
+function changeStatus(data, formCurrent, status) {
+    $.ajax({
+        type: 'POST',
+        url: action['change_status'],
+        dataType: 'json',
+        data: data,
+        success:function(data) {
+            if (data.result) {
+                formCurrent.parents('tr').find('.status').html(status);
+                formCurrent.parents('td').remove();
             }
         }
     });

@@ -13,10 +13,12 @@
         @include('member.product.viewed_product')
         </div>
         <div class="content">
+            @include('admin.block.messages')
             <div class="cnt-main">
                 <div class="form-w3agile form1">
                     <h3>{{ trans('common.title-detail') }}</h3>
                     {!! Form::open(['action' => ['Auth\RegisterController@update', $user->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::hidden('id', $user->id) !!}
 
                         @include('member.user.form_user')
                         <div class="form-group col-md-offset-8" >

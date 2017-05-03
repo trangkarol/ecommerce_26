@@ -64,17 +64,21 @@ $(document).ready(function () {
 
     $(document).on('change', '.message-login', function (event) {
         event.preventDefault();
-        bootbox.alert(trans['msg_login'], function () {
-            urlCall = window.location.pathname.replace(/\//g, '-');
-            window.location.href = '/login/' + urlCall;
+        bootbox.confirm(trans['msg_login'], function ($result) {
+            if ($result) {
+                urlCall = window.location.pathname.replace(/\//g, '-');
+                window.location.href = '/login/' + urlCall;
+            }
         });
     });
 
     $(document).on('click', '#message', function (event) {
         event.preventDefault();
-        bootbox.alert(trans['msg_login'], function () {
-            urlCall = window.location.pathname.replace(/\//g, '-');
-            window.location.href = '/login/' + urlCall;
+        bootbox.confirm(trans['msg_login'], function ($result) {
+            if ($result) {
+                urlCall = window.location.pathname.replace(/\//g, '-');
+                window.location.href = '/login/' + urlCall;
+            }
         });
     });
 
@@ -201,7 +205,7 @@ function cart() {
         // }
     });
 
-    $(".input-number").keydown(function (e) {
+    $('.input-number').keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
              // Allow: Ctrl+A

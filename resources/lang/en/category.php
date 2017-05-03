@@ -14,10 +14,10 @@ return [
     'lbl-category' => 'Parent Category',
     'lbl-list-subcategory' => 'SubCategory',
     'tooltip' => [
-        'create' => 'Create order',
-        'update' => 'Update order',
-        'delete' => 'Delete order',
-        'list' => 'List orders',
+        'create' => 'Create category',
+        'update' => 'Update category',
+        'delete' => 'Delete category',
+        'list' => 'List categories',
     ],
 
     'msg' => [
@@ -28,8 +28,8 @@ return [
 
         'insert-success' => 'Insert Category Success!',
         'insert-fail' => 'Insert Category Fail!',
-        'update-success' => 'Update Category Success!',
-        'update-fail' => 'Update Category Fail!',
+        'edit-success' => 'Update Category Success!',
+        'edit-fail' => 'Update Category Fail!',
         'delete-success' => 'Delete Category Success!',
         'delete-fail' => 'Delete Category Fail!',
         'change-status-success' => 'Change status success',
